@@ -48,13 +48,13 @@ style = "github-dark"
 name = "Github"
 icon = "fa-brands fa-github fa-2x"
 weight = 1
-url = "https://github.com/johndoe/"
+url = "https://github.com/Nathaniel-Roberts/"
 
 [[params.social]]
 name = "LinkedIn"
 icon = "fa-brands fa-linkedin fa-2x"
 weight = 4
-url = "https://www.linkedin.com/in/johndoe/"
+url = "www.linkedin.com/in/nathaniel-g-roberts/"
 
 
 # Menu links
