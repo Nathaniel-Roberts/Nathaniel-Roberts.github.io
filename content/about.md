@@ -1,25 +1,26 @@
 +++
 title = "About"
-description = "Hugo, the world's fastest framework for building websites"
-date = "2019-02-28"
+description = "About Me - Nathaniel Roberts"
+date = "2024-06-12"
 aliases = ["about-us", "about-hugo", "contact"]
-author = "Hugo Authors"
+author = "Nathaniel Roberts"
 +++
 
-Written in Go, Hugo is an open source static site generator available under the [Apache Licence 2.0.](https://github.com/gohugoio/hugo/blob/master/LICENSE) Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
+Hello and welcome to my website!
 
-Hugo makes use of a variety of open source projects including:
+I am a dedicated third-year Cybersecurity student at Macquarie University, driven by a passion for fortifying digital landscapes and ensuring robust information security. My journey in the world of technology is fueled by a commitment to learning, growing, and making a meaningful impact in the field of Cybersecurity.
 
-* https://github.com/yuin/goldmark
-* https://github.com/alecthomas/chroma
-* https://github.com/muesli/smartcrop
-* https://github.com/spf13/cobra
-* https://github.com/spf13/viper
+Currently, I am honing my skills as an ICT Junior Systems Engineer. In this role, I am responsible for creating, supporting, and optimising critical IT infrastructure. My hands-on experience in this position has deepened my understanding of the intricacies of IT systems and the importance of maintaining secure and efficient operations.
 
-Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.
+My goal is to continuously expand my skill set, embracing new challenges and opportunities in the ever-evolving domain of Cybersecurity. I am eager to collaborate with like-minded professionals and contribute to innovative solutions that enhance security and operational efficiency.
 
-Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.
+Beyond my professional pursuits, I am an avid learner, always on the lookout for the latest trends and advancements in technology. I believe that staying informed and adaptable is key to thriving in this dynamic industry.
 
-Websites built with Hugo are extremely fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.
+Thank you for visiting my website. I look forward to connecting with you and exploring how we can work together to secure the digital future.
 
-Learn more and contribute on [GitHub](https://github.com/gohugoio).
+Feel free to reach out to me through the contact page if you have any questions or if you would like to discuss potential collaborations.
+
+
+
+
+
