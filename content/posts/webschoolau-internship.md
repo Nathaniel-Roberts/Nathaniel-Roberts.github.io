@@ -12,10 +12,10 @@ I am thrilled to share my journey as an intern at WebSchool.au, where I had the 
 
 ## Key Learnings and Experiences
 ### Penetration Testing in a Live Environment
-One of the most significant aspects of this internship was working on penetration testing in a live environment built on APIs. Testing a live system required us to be meticulous and cautious to avoid disruptions while ensuring comprehensive security assessments. This real-world application of our skills highlighted the importance of precision and responsibility in penetration testing, while sticking closely to the scope of works.
+One of the most significant aspects of this internship was working on penetration testing in a live environment built on APIs. Testing a live system required us to be careful and cautious to avoid disruptions while ensuring comprehensive security assessments. This real-world application of our skills highlighted the importance of precision and responsibility in penetration testing, while sticking closely to the scope of works.
 
 ### Mastery of Kali Linux
-We also became proficient in Kali Linux, a powerful platform specifically designed for cybersecurity tasks. Utilising Kali Linux provided us access to a wide range of tools and resources that significantly enhanced our testing capabilities.
+We also became proficient in Kali Linux, a powerful linux platform specifically designed for cybersecurity tasks. Utilising Kali Linux provided us access to a wide range of tools and resources that significantly enhanced our testing capabilities.
 
 ### Utilising Penetration Tools
 Our new skills in penetration tools, such as SQLmap and XSStrike, were another major learning point. SQLmap allowed us to automate the detection of SQL injection vulnerabilities, while XSStrike helped us identify and exploit XSS vulnerabilities. Mastering these tools provided us with deeper insights into the security landscape and improved our ability to protect web applications.
