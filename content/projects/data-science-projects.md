@@ -33,4 +33,4 @@ Split the dataset into training and testing sets, and standardize the features.
 Build a logistic regression model to predict the 'Subscription Status' based on other features. Report the accuracy and classification report.
 Build a k-nearest neighbors (KNN) classifier to predict the 'Category' based on other features. Determine the optimal number of neighbors using cross-validation.
 
-[Data Science Portfolio 4](https://github.com/Nathaniel-Roberts/Data-Science-Portfolio-4s)
+[Data Science Portfolio 4](https://github.com/Nathaniel-Roberts/Data-Science-Portfolio-4)
