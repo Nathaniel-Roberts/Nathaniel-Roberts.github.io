@@ -22,8 +22,8 @@ style = "github-dark"
   #gravatar = "john.doe@example.com"
 
 #  faviconSVG = "/img/favicon.svg"
-  favicon_32 = "/static/images/favicon-32x32.png" 
-  favicon_16 = "/static/images/favicon-16x16.png"
+  favicon_32 = "/images/favicon-32x32.png" 
+  favicon_16 = "/images/favicon-16x16.png"
 
   dateFormat = "January 2, 2006"
   since = 2024
