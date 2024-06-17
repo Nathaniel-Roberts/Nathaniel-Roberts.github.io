@@ -7,6 +7,6 @@ If you have any questions or would like to discuss potential collaborations, ple
 
 Reach me on [GitHub](https://github.com/nathaniel-roberts/).
 
-Reach me on [LinkdedIn](https://linkedin.com/in/nathaniel-g-roberts/).
+Reach me on [LinkedIn](https://linkedin.com/in/nathaniel-g-roberts/).
 
 Contact me via email at contact@nathanielroberts.tech.
