@@ -2,7 +2,7 @@
 authors = ["Nathaniel Roberts"]
 title = "SETUP International Internship"
 date = "2024-06-13"
-description = "This post goes through my time conducting penetration tests for WebSchoolAU, a subsidiary of SETUP International. "
+description = "This post goes through my time conducting penetration tests for WebSchoolAU, a subsidiary of SETUP International."
 +++
 
 
