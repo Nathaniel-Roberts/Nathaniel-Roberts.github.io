@@ -76,15 +76,23 @@ weight = 4
 url = "contact/"
 
 # Comments
-[params.giscus]
-repo = "Nathaniel-Roberts/Nathaniel-Roberts.github.io"
-repoID = "R_kgDOI1dzaQ"
-category = "Announcements"
-categoryID = "DIC_kwDOI1dzac4Cgh9i"
-mapping = "pathname"
-reactionsEnabled = "1"
-emitMetadata = "0"
-inputPosition = "top"
-theme = "noborder_dark"
-lang = "en"
-loading = "lazy"
+[comments]
+  # Comment provider:
+  provider = "giscus"
+
+  # Which page types are commentable?
+  commentable = {posts = true, projects = false}
+
+  # Configuration of giscus
+  [comments.giscus]
+    repo = "Nathaniel-Roberts/Nathaniel-Roberts.github.io"
+    repoID = "R_kgDOI1dzaQ"
+    category = "Announcements"
+    categoryID = "DIC_kwDOI1dzac4Cgh9i"
+    mapping = "pathname"
+    reactionsEnabled = "1"
+    emitMetadata = "0"
+    inputPosition = "top"
+    theme = "noborder_dark"
+    lang = "en"
+    loading = "lazy"
