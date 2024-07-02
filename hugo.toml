@@ -74,8 +74,8 @@ url = "about/"
 name = "Contact Me"
 weight = 4
 url = "contact/"
-[[main]]
+[[menu.main]]
   identifier = "search"
-  weight = 99
+  weight = 5
   [main.params]
     action = "search"
