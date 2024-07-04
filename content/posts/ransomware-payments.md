@@ -1,7 +1,7 @@
 +++
 authors = ["Nathaniel Roberts"]
 title = "Navigating the Ransomware Dilemma: Should Organisations Pay or Not Pay?"
-date = "2024-06-16"
+date = "2024-07-03"
 description = "Exploring the critical debate on whether organisations should pay ransoms to recover their data amidst rising ransomware attacks, highlighting the key arguments and strategic considerations."
 +++
 
@@ -43,6 +43,9 @@ The FBI acknowledges that banning ransom payments is not a comprehensive solutio
 
 “Whichever path you choose – pay or not pay – it may take time to return to normal operations. You should take steps to maintain your organisation’s essential functions according to your business continuity plan” *(Ey, 2020)*. Ultimately, the decision to pay or not to pay a ransom depends on the specific circumstances of each case. There is no universal solution to ransomware attacks; each scenario is unique and requires careful consideration to ensure the best outcome for the organisation, its stakeholders, and the broader community. Thoughtful discernment and strategic planning are essential in navigating the complexities of ransomware incidents to minimise harm and safeguard critical functions.
 
+<details>
+
+<summary>References</summary>
 
 # References
 Carr DF (2022) Should ransomware payments be illegal?: Endpoint. Tanium. Available from: [https://www.tanium.com/blog/should-ransomware-payments-be-illegal/](https://www.tanium.com/blog/should-ransomware-payments-be-illegal/) 
@@ -72,3 +75,5 @@ Shi F (2020) Ransomware attacks: Why it should be illegal to pay the ransom. Dar
 SOPHOS (2020) The State of Ransomware 2020. Available from: [https://www.sophos.com/en-us/medialibrary/Gated-Assets/white-papers/sophos-the-state-of-ransomware-2020-wp.pdf](https://www.sophos.com/en-us/medialibrary/Gated-Assets/white-papers/sophos-the-state-of-ransomware-2020-wp.pdf) 
 
 Wheeler T and Martin C (2021) Should ransomware payments be banned? Brookings, Brookings. Available from: [https://www.brookings.edu/techstream/should-ransomware-payments-be-banned/](https://www.brookings.edu/techstream/should-ransomware-payments-be-banned/) 
+
+</details>
