@@ -2,7 +2,7 @@
 authors = ["Nathaniel Roberts"]
 title = "Sony Interactive Entertainment: Information Security Review"
 date = "2024-07-15"
-description = "This report, addressed to Sony Interactive Entertainment, begins with a literature review of five businesses. It then proceeds to an Information Security Review, considering the recent breach at Sony
+description = "This report, addressed to Sony Interactive Entertainment, begins with a literature review of five businesses. It then proceeds to an Information Security Review, considering the recent breach at Sony"
 +++
 
 # Table of Contents
