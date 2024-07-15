@@ -2,7 +2,9 @@
 authors = ["Nathaniel Roberts"]
 title = "Navigating the Ransomware Dilemma: Should Organisations Pay or Not Pay?"
 date = "2024-07-03"
-description = "Exploring the critical debate on whether organisations should pay ransoms to recover their data amidst rising ransomware attacks, highlighting the key arguments and strategic considerations."
+description = """
+Exploring the critical debate on whether organisations should pay ransoms to recover their data amidst rising ransomware attacks, highlighting the key arguments and strategic considerations.
+"""
 +++
 
 
