@@ -266,113 +266,89 @@ To assess Sony Interactive Entertainment's (SIE) information security maturity, 
 **Application Control:**
 
 Current State:
-
 Sony Interactive Entertainment has initiated application control measures but lacks consistent enforcement across all systems, creating vulnerabilities. There is no external proof that application control is being monitored and enforced.
 
 Example:
-
 During the breach, not all applications were whitelisted or restricted to approved versions, allowing unauthorised or outdated software to run and potentially contribute to the breach.
 
 Recommendation:
-
 To improve application control, SIE should implement a strict application whitelisting policy. This includes deploying robust whitelisting tools, conducting regular audits, educating employees, enforcing policies, and establishing continuous monitoring. These steps will ensure only approved software can execute on the network, reducing security risks and enhancing overall protection.
 
 **Patch Application:**
 
 Current State:
-
 SIE's patch management practices have demonstrated significant deficiencies, as evidenced by the vulnerabilities exploited during the breach.
 
 Example:
-
 The breach exploited a delay in patching the MOVEit Transfer platform used by an IT vendor, leaving critical systems exposed.
 
 Recommendation:
-
 To address these deficiencies, SIE should adopt automated patch management tools. These tools can ensure the timely application of security patches, especially for high-risk systems and applications. Additionally, implementing a robust patch management policy, conducting regular vulnerability assessments, and prioritising patches based on risk severity will further strengthen SIE's security posture and reduce the likelihood of future breaches.
 
 **Office Macros**
 
 Current State:
-
 While it is assumed that SIE has restricted the use of macros, there is no available information confirming the extent or effectiveness of these controls.
 
 Example:
-
 There may be instances where employees can enable macros without adequate justification or security controls, potentially increasing the risk of malware execution.
 
 Recommendation:
-
 To mitigate this risk, SIE should implement group policies that disable macros by default. Additionally, any macros that need to be enabled should require digital signatures to ensure their authenticity. This approach will significantly reduce the likelihood of malicious macros being executed within the organisation. Regular reviews and updates of macro policies should be conducted to adapt to evolving threats.
 
 **User Application Hardening**
 
 Current State:
-
 There are measures in place to harden user applications, but inconsistent implementation has left some systems vulnerable.
 
 Example:
-
 Web browsers and PDF readers may not always be configured to block active content from untrusted sources, increasing the risk of exploitation.
 
 Recommendation:
-
 Standardise user application hardening policies across Sony Interactive Entertainment to ensure all applications are configured to reduce vulnerabilities. This includes configuring web browsers to block active content from untrusted sources, disabling unnecessary features in applications, and ensuring regular updates and patches are applied. Consistent enforcement and periodic audits of these policies will help mitigate potential risks.
 
 **Restricting Administrative Privileges**
 
 Current State:
-
 SIE restricts administrative privileges, but improvements are needed to minimise the risk of privilege escalation.
 
 Example:
-
 Some users may still have unnecessary administrative access, potentially exposing the system to greater risks if their accounts are compromised.
 
 Recommendation:
-
 Conduct regular reviews of administrative privileges to identify and remove unnecessary access rights. Implement a strict least privilege policy, ensuring users only have access necessary for their role. Additionally, use role-based access controls (RBAC) to manage and enforce these policies, and provide training to employees on the importance of maintaining minimal access levels. Regular audits and monitoring of access logs can further help in identifying and addressing any unauthorised privilege escalations.
 
 **Multi-Factor Authentication (MFA):**
 
 Current State:
-
 MFA is implemented for some critical systems but is not uniformly enforced across all access points, although it is available.
 
 Example:
-
 Not all remote access or privileged accounts are protected with MFA, leaving some entry points vulnerable to unauthorised access.
 
 Recommendation:
-
 Expand the use of MFA to cover all remote access points and privileged accounts. This includes implementing MFA for all employees, contractors, and third-party vendors who access the network remotely or hold privileged accounts. Ensure that MFA methods are robust, such as using hardware tokens or biometrics, and conduct regular reviews to verify compliance and effectiveness. Enhanced MFA coverage will significantly reduce the risk of unauthorised access and strengthen overall security.
 
 **Regular Backups:**
 
 Current State:
-
 SIE conducts regular backups, but the frequency and comprehensiveness of these backups need improvement.
 
 Example:
-
 Backups may not be conducted daily, and some critical data may not be included in the backup process, potentially leading to data loss in the event of an incident.
 
 Recommendation:
-
 Implement a policy for daily automated backups to ensure all critical data is consistently backed up. Additionally, regularly test backup and restoration processes to verify data integrity and availability. By doing so, SIE can ensure that in the event of a cyber incident or data loss, the organisation can quickly and effectively restore operations without significant data loss.
 
 **Patch Operating Systems:**
 
 Current State:
-
 SIE's current patch management practices for operating systems are insufficient, as evidenced by the exploitation of vulnerabilities that could have been mitigated through timely updates.
 
 Example:
-
 The breach at SIE revealed that critical patches were not applied promptly, leaving systems vulnerable to exploitation by attackers.
 
 Recommendation:
-
 Enhance the patch management process by implementing automated patch management tools, ensuring that patches are applied as soon as they are released. Establish a rigorous schedule for regular patching, prioritise critical updates, and conduct periodic audits to verify that all systems are consistently patched. This proactive approach will significantly reduce the risk of vulnerabilities being exploited and improve the overall security posture of SIE's operating systems.
 
 The assessment of Sony Interactive Entertainment's (SIE) cybersecurity practices using the Australian Cyber Security Centre's (ACSC) Essential Eight Maturity Model reveals both strengths and critical areas for improvement. While SIE has made strides in some areas, such as restricting administrative privileges and implementing multi-factor authentication for critical systems, there are significant gaps that need to be addressed to achieve a higher level of maturity and resilience against cyber threats.
