@@ -140,7 +140,7 @@ web-based exploit. The hint that was provided was: “Keeping the creepy-crawlie
 To begin this Challenge, I browsed to the supplied IP Address (10.244.1.10), to look at the site. The site’s
 front facing page can be seen in Figure 1.
 
-![Figure 1](images/ctf-one/figure-1.png)
+![Figure 1](../images/ctf-one/figure-1.png)
 ```
 Figure 1 : 10.244.1.10 Home Page
 ```
