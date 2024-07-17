@@ -1,6 +1,6 @@
 +++
 authors = ["Nathaniel Roberts"]
-title = "Capture the Flag - 1"
+title = "CTF #1  - Penetration Test Report"
 date = "2024-06-13"
 description = "This is a list of 4 portfolios I completed while finishing a Data Science Course at Macquarie University"
 +++
@@ -149,7 +149,7 @@ The page had the instructions to use the Nav Bar to find the flag. SO navigating
 the “Flag()” in the nav bar. This had a dropdown with “Flag” as an option. Upon clicking this, I got the
 following page in Figure 2.
 
-![Figure 2](../../static/images/ctf-one/figure-2.png)
+![Figure 2](../images/ctf-one/figure-2.png)
 ```
 Figure 2 : 10.244.1.10 Flag Page
 ```
@@ -167,11 +167,11 @@ shows that the only site that was disallowed was /admin. We then navigated to th
 saying we weren’t authorised to view this page, see Figure 4. We decided to start our Exploitation at this
 point.
 
-![Figure 3](../../static/images/ctf-one/figure-3.png)
+![Figure 3](../images/ctf-one/figure-3.png)
 ```
 Figure 3 : 10.244.1.10 Robots.txt Page
 ```
-![Figure 4](../../static/images/ctf-one/figure-4.png)
+![Figure 4](../images/ctf-one/figure-4.png)
 ```
 Figure 4 : 10.244.1.10 Admin Page
 ```
@@ -259,7 +259,7 @@ The page “10.244.1.10/admin.index.php”, returned contained the text “The f
 
 
 **ac46bdf983905489970b6535505a424e** ”. See Figure 5.
-![Figure 5](../../static/images/ctf-one/figure-5.png)
+![Figure 5](../images/ctf-one/figure-5.png)
 ```
 Figure 5 : 10.244.1.10 Admin/Index.php Page
 ```
@@ -295,7 +295,7 @@ being “Manual Labour”. We decided that this meant man pages. So we continued
 hoping to see something stick out. When searching through the files, we found in the /usr/share directory,
 a folder named “man”. We viewed the contents of this directory using “ls” and saw a list of folders all with
 man in the title, see Figure 6.
-![Figure 6](../../static/images/ctf-one/figure-6.png)
+![Figure 6](../images/ctf-one/figure-6.png)
 ```
 Figure 6 : 10.244.1. 20 /usr/share/man Directory
 ```
@@ -307,25 +307,25 @@ directory.
 Because of the hint, “Four on the floor or three on the tree”, we decided to search the “man3” and
 the “man4” directories. You can find their contents in Figure 7 and Figure 8.
 
-![Figure 7](../../static/images/ctf-one/figure-7.png)
+![Figure 7](../images/ctf-one/figure-7.png)
 ```
 Figure 7 : 10.244.1. 20 /usr/share/man/man3 Directory
 ```
-![Figure 8](../../static/images/ctf-one/figure-8.png)
+![Figure 8](../images/ctf-one/figure-8.png)
 ```
 Figure 8 : 10.244.1. 20 /usr/share/man/man4 Directory
 ```
 The contents of “man4” seemed more promising with the “man4.gz” file. Because this file has been
 compressed, we used “gunzip -dc man4.gz” to extract the file. You can see the results in Figure 9.
 
-![Figure 9](../../static/images/ctf-one/figure-9.png)
+![Figure 9](../images/ctf-one/figure-9.png)
 ```
 Figure 9 : 10.244.1. 20 man4 file contents
 ```
 The beginning of the file says “Capture the Flag”, so we further investigated the file. Further down we find
 text saying, “Four on the floor”, followed by what looks like a flag. Since this is part of the hint, we decided
 to test the flag. It was correct. The flag is “ **314157e25dc53f0891b235df77a07016** ”, see Figure 10.
-![Figure 10](../../static/images/ctf-one/figure-10.png)
+![Figure 10](../images/ctf-one/figure-10.png)
 ```
 Figure 10 : 10.244.1. 20 man4 file contents/flag
 ```
@@ -361,7 +361,7 @@ that stood out. We used the commands “ls” and “cd” and “cat” to disc
 them and try and find possible hints. We decided to investigate what the hint could possibly mean. We
 started doing some research and found that we could check process states and if they were dead. To view
 this we used the command “ps axu” see Figure 11.
-![Figure 11](../../static/images/ctf-one/figure-11.png)
+![Figure 11](../images/ctf-one/figure-11.png)
 ```
 Figure 11 : 10.244.1. 30 “ps aux”
 ```
