@@ -271,7 +271,7 @@ with Authentication headers or using the Cookie header. This will only allow aut
 access the sites and therefore increasing security.
 
 **References** :
-[http://www.robotstxt.org/robotstxt.html](http://www.robotstxt.org/robotstxt.html)
+- [http://www.robotstxt.org/robotstxt.html](http://www.robotstxt.org/robotstxt.html)
 
 
 ### 2.2 Lack of File Security
@@ -340,7 +340,7 @@ access the files.
 
 **References** :
 
-https://www.quora.com/What-is-four-on-the-floor
+- https://www.quora.com/What-is-four-on-the-floor
 
 
 ### 2.3 Lack of Process Termination
@@ -396,10 +396,9 @@ malicious actors to view all the commands your Unix System is running.
 If these “Sleeping” process had been properly killed, the flag wouldn’t have been found.
 
 **References** :
-https://itslinuxfoss.com/process-state-x-dead/
-https://stackoverflow.com/questions/32418718/how-to-see-the-process-table-in-unix
-https://unix.stackexchange.com/questions/252507/how-can-i-wake-a-process-from-sleep-status-via-
-signal-or-proc
+- https://itslinuxfoss.com/process-state-x-dead/
+- https://stackoverflow.com/questions/32418718/how-to-see-the-process-table-in-unix
+- https://unix.stackexchange.com/questions/252507/how-can-i-wake-a-process-from-sleep-status-via-signal-or-proc
 
 
 ### 2.4 Unfinished Challenge
@@ -427,9 +426,9 @@ file were “3 FEB 2611, 01:55:12.109”
 No more progress was made, as the challenge had concluded.
 
 **References** :
-https://en.wikipedia.org/wiki/Year_2038_problem
-https://www.epochconverter.com/
-https://www.cyberciti.biz/faq/howto-set-date-time-from-linux-command-prompt/
+- https://en.wikipedia.org/wiki/Year_2038_problem
+- https://www.epochconverter.com/
+- https://www.cyberciti.biz/faq/howto-set-date-time-from-linux-command-prompt/
 
 
 ## 3 Ethics and Reflection
