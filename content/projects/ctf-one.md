@@ -1,6 +1,6 @@
 +++
 authors = ["Nathaniel Roberts"]
-title = "CTF #1  - Penetration Test Report"
+title = "Capture the Flag #1  - Penetration Test Report"
 date = "2023-09-05"
 description = "This is the first of three CTFs I completed during my time at University"
 +++
