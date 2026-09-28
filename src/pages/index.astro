@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Terminal from '../components/Terminal.astro';
 import Card from '../components/Card.astro';
+import Contributions from '../components/Contributions.astro';
 import { BUILD } from '../lib/build';
 import { SITE, ROLE } from '../site';
 import avatar from '../assets/avatar.jpg';
@@ -72,6 +73,8 @@ const lines = [
         ))}
       </ol>
     </section>
+
+    <Contributions />
   </div>
 
   <p class="term-toggle"><button type="button" class="linkish" data-term-open aria-expanded="false" aria-controls="terminal">Open terminal</button></p>
