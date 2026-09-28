@@ -4,16 +4,16 @@ import Base from '../layouts/Base.astro';
 const description = 'The hardware, software and homelab behind the work. What runs where, and what it is for.';
 
 const estate = [
-  { name: 'Firewall', hw: 'Dell OptiPlex 7090 Micro', what: 'OPNsense as a router-on-a-stick for the VLANs, Kea DHCP, AdGuard Home for DNS, Tailscale subnet router. Config is Terraform-managed with the XML backed up to git hourly.' },
-  { name: 'Home Assistant', hw: 'Dell OptiPlex 7090 Micro, 1 TB NVMe', what: 'Home Assistant OS on bare metal. Frigate NVR, EMQX, Nginx Proxy Manager, Cloudflare Tunnel, the UniFi controller and around thirty add-ons.' },
-  { name: 'Proxmox', hw: 'Dell OptiPlex 7090, i7-11700T, 32 GB', what: 'LXC containers for the media stack, a Paper Minecraft server for friends, Homepage, Audiobookshelf and a NixOS container.' },
-  { name: 'Storage', hw: 'Synology NAS', what: 'NFS for media libraries, camera recordings, weekly Proxmox backups and nightly config archives.' },
-  { name: 'Network', hw: '2x Ubiquiti USW Enterprise 8 PoE', what: '10G SFP+ link between switches, PoE for the access point, VLAN-segmented (servers, IoT, security, guests) with the firewall owning every gateway.' },
-  { name: 'Wi-Fi', hw: 'Aerohive AP550', what: 'Per-user pre-shared keys map each device to its VLAN, so an IoT gadget lands on the IoT network without a separate SSID.' },
+  { role: 'Firewall', title: 'OPNsense', hw: 'Dell OptiPlex 7090 Micro', what: 'Router-on-a-stick for the VLANs, Kea DHCP, AdGuard Home for DNS, Tailscale subnet router. Config is Terraform-managed with the XML backed up to git hourly.' },
+  { role: 'Home automation', title: 'Home Assistant', hw: 'Dell OptiPlex 7090 Micro, 1 TB NVMe', what: 'Home Assistant OS on bare metal. Frigate NVR, EMQX, Nginx Proxy Manager, Cloudflare Tunnel, the UniFi controller and around thirty add-ons.' },
+  { role: 'Hypervisor', title: 'Proxmox VE', hw: 'Dell OptiPlex 7090, i7-11700T, 32 GB', what: 'LXC containers for the media stack, a Paper Minecraft server for friends, Homepage, Audiobookshelf and a NixOS container.' },
+  { role: 'Storage', title: 'Synology NAS', hw: '', what: 'NFS for media libraries, camera recordings, weekly Proxmox backups and nightly config archives.' },
+  { role: 'Network', title: 'Ubiquiti UniFi', hw: '2x USW Enterprise 8 PoE', what: '10G SFP+ link between switches, PoE for the access point, VLAN-segmented (servers, IoT, security, guests) with the firewall owning every gateway.' },
+  { role: 'Wi-Fi', title: 'Aerohive AP550', hw: '', what: 'Per-user pre-shared keys map each device to its VLAN, so an IoT gadget lands on the IoT network without a separate SSID.' },
 ];
 
 const stacks = [
-  { group: 'Media', items: 'Jellyfin with Intel QSV transcoding, Sonarr, Radarr, Prowlarr, Seerr, Bazarr, Recyclarr, Pinchflat, qBittorrent, Decluttarr' },
+  { group: 'Media', items: 'Jellyfin with Intel QSV hardware transcoding, Audiobookshelf, Pinchflat for archiving YouTube channels' },
   { group: 'Observability', items: 'Uptime Kuma, Grafana, InfluxDB, Telegraf on the firewall, Beszel, webhooks into Home Assistant for phone alerts' },
   { group: 'Self-hosted apps', items: 'SparkyFitness (nutrition and training), TREK (travel planner) behind Cloudflare Tunnel and Access, Homepage dashboard, Audiobookshelf' },
   { group: 'Infrastructure as code', items: 'Terraform for OPNsense, UniFi and Nginx Proxy Manager. Nix flakes for the workstation (NixOS) and the laptop (nix-darwin, nix-homebrew). sops-nix for secrets. Everything in git.' },
@@ -45,9 +45,10 @@ const travel = [
     <ol class="index uses-estate">
       {estate.map((e) => (
         <li class="row">
-          <span class="row-date">{e.name}</span>
+          <span class="row-date">{e.role}</span>
           <div>
-            <h3 class="row-title">{e.hw}</h3>
+            <h3 class="row-title">{e.title}</h3>
+            {e.hw && <p class="row-hw">{e.hw}</p>}
             <p class="row-desc">{e.what}</p>
           </div>
         </li>
