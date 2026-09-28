@@ -1,4 +1,5 @@
 ---
+import { SITE, ROLE } from '../site';
 export interface TermLine {
   cmd: string;
   out?: string;
@@ -16,7 +17,7 @@ interface Props {
 const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~', hint = 'Type "help" and press Enter.' } = Astro.props;
 ---
 
-<div class="term" data-term>
+<div class="term" data-term data-tagline={SITE.tagline} data-whoami={ROLE.whoami}>
   <div class="term-bar" aria-hidden="true">
     <span class="dot"></span><span class="dot"></span><span class="dot"></span>
     <span class="term-title">{title}</span>
@@ -57,11 +58,10 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
     about: '/about/', me: '/about/',
     contact: '/contact/', rss: '/rss.xml',
   };
-  const TAGLINE = 'Systems Engineer | Automation | Security-Driven IT Solutions';
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
   const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function run(raw: string): { text?: string; html?: string; error?: boolean; clear?: boolean; go?: string } {
+  function run(term: HTMLElement, raw: string): { text?: string; html?: string; error?: boolean; clear?: boolean; go?: string } {
     const [cmd = '', ...rest] = raw.trim().split(/\s+/);
     const arg = rest.join(' ');
     const key = arg.replace(/^~?\/?/, '').replace(/\/$/, '').toLowerCase();
@@ -73,12 +73,12 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
         if (key in ROUTES) return { text: `Opening ${ROUTES[key]}`, go: ROUTES[key] };
         return { text: `cd: no such file or directory: ${arg || '~'}`, error: true };
       case 'blog': case 'posts': case 'projects': case 'about': case 'contact': return { text: `Opening ${ROUTES[cmd.toLowerCase()]}`, go: ROUTES[cmd.toLowerCase()] };
-      case 'whoami': return { text: 'Nathaniel Roberts. Systems engineer. Security first, automate the rest.' };
+      case 'whoami': return { text: term.dataset.whoami || 'Nathaniel Roberts.' };
       case 'hostname': return { text: 'nathanielroberts.tech' };
       case 'pwd': return { text: location.pathname };
       case 'date': return { text: new Date().toLocaleString('en-AU', { timeZone: 'Australia/Sydney', dateStyle: 'full', timeStyle: 'short' }) + ' (Sydney)' };
       case 'cat':
-        if (/role\.txt$/i.test(arg)) return { text: TAGLINE };
+        if (/role\.txt$/i.test(arg)) return { text: term.dataset.tagline || '' };
         if (/(flag|passw|secret|shadow|id_rsa)/i.test(arg)) return { text: `cat: ${arg}: Permission denied. Nice try though.`, error: true };
         return { text: arg ? `cat: ${arg}: No such file or directory` : 'cat: missing file operand', error: true };
       case 'echo': return { text: arg };
@@ -156,7 +156,7 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
       const raw = input.value;
       input.value = '';
       if (raw.trim()) { history.push(raw); hi = history.length; }
-      const res = run(raw);
+      const res = run(term, raw);
       if (res.clear) { log.innerHTML = ''; term.querySelectorAll('[data-block]').forEach((b) => b.remove()); return; }
       const block = document.createElement('div');
       block.className = 't-block';

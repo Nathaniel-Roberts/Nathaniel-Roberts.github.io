@@ -1,8 +1,41 @@
-export const SITE = {
-  name: 'Nathaniel Roberts',
+// Role switch. Until this date the site describes the current role; a build on or
+// after it describes the new one. Update the date if the start date moves, then
+// redeploy (any push, or "Retry deployment" in Cloudflare) once the date has passed.
+export const NEXT_ROLE_STARTS = new Date('2026-10-12T00:00:00+11:00');
+export const STARTED_NEXT = new Date() >= NEXT_ROLE_STARTS;
+
+const currentRole = {
+  title: 'ICT Systems Engineer',
+  org: null as string | null,
+  headline: 'Systems Engineer',
   tagline: 'Systems Engineer | Automation | Security-Driven IT Solutions',
   description:
-    'Systems engineer writing about security, automation and IT infrastructure. Penetration test reports, incident analyses and privacy assessments.',
+    'Systems engineer with a cybersecurity background, writing about security, automation and IT infrastructure. Penetration test reports, incident analyses and privacy assessments.',
+  intro:
+    "I'm a systems engineer with a cybersecurity background. Day to day I look after IT infrastructure: building it, supporting it, and automating the parts that shouldn't need a human. Security isn't a separate job to me. It's the lens I use for everything from a server build to a script.",
+  now: 'Working as an ICT Systems Engineer, automating the repetitive parts of IT operations, and getting ready to move into incident response at PepsiCo in October 2026.',
+  whoami: 'Nathaniel Roberts. Systems engineer, soon incident responder. Security first, automate the rest.',
+};
+
+const nextRole = {
+  title: 'Cybersecurity Incident Response Analyst',
+  org: 'PepsiCo' as string | null,
+  headline: 'Cybersecurity Incident Response Analyst',
+  tagline: 'Cybersecurity Incident Response Analyst | Detection, Response, Automation',
+  description:
+    'Cybersecurity incident response analyst with a systems engineering background, writing about detection, response, automation and IT infrastructure. Penetration test reports, incident analyses and privacy assessments.',
+  intro:
+    "I'm a cybersecurity incident response analyst at PepsiCo, with a systems engineering background. I came to security from the operations side: building and supporting infrastructure taught me how systems actually behave, which is exactly what you need when one of them is misbehaving on purpose.",
+  now: 'Working in incident response at PepsiCo, automating the repetitive parts of detection and triage, and writing up security work here as I go.',
+  whoami: 'Nathaniel Roberts. Incident response analyst at PepsiCo. Security first, automate the rest.',
+};
+
+export const ROLE = STARTED_NEXT ? nextRole : currentRole;
+
+export const SITE = {
+  name: 'Nathaniel Roberts',
+  tagline: ROLE.tagline,
+  description: ROLE.description,
   url: 'https://nathanielroberts.tech',
   domain: 'nathanielroberts.tech',
   email: 'contact@nathanielroberts.tech',

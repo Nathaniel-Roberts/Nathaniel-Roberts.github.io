@@ -1,12 +1,12 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import { renderOg, type OgInput } from '../../lib/og';
-import { SITE, fmtDateShort } from '../../site';
+import { SITE, STARTED_NEXT, fmtDateShort } from '../../site';
 
 export async function getStaticPaths() {
   const statics: { slug: string; props: OgInput }[] = [
     { slug: 'index', props: { title: SITE.name, description: SITE.tagline, eyebrow: 'whoami' } },
-    { slug: 'about', props: { title: 'About', description: 'Systems engineer with a cybersecurity background. Infrastructure, automation and security-led IT operations.', eyebrow: 'cat about.md' } },
+    { slug: 'about', props: { title: 'About', description: STARTED_NEXT ? 'Cybersecurity incident response analyst at PepsiCo with a systems engineering background.' : 'Systems engineer with a cybersecurity background, moving into incident response at PepsiCo.', eyebrow: 'cat about.md' } },
     { slug: 'contact', props: { title: 'Contact', description: 'Questions, project ideas or collaborations.', eyebrow: 'cat contact.md' } },
     { slug: 'posts', props: { title: 'Blog', description: 'Notes on security, automation and the work of keeping IT infrastructure running.', eyebrow: 'ls ~/posts' } },
     { slug: 'projects', props: { title: 'Projects', description: 'Penetration test reports, incident analyses, privacy assessments and data work.', eyebrow: 'ls ~/projects' } },

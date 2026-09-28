@@ -6,7 +6,7 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Search from '../components/Search.astro';
-import { SITE } from '../site';
+import { SITE, ROLE } from '../site';
 
 interface Props {
   title?: string;
@@ -17,7 +17,7 @@ interface Props {
   noindex?: boolean;
 }
 const { title, description = SITE.description, og = 'index', type = 'website', published, noindex = false } = Astro.props;
-const fullTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} · Systems Engineer`;
+const fullTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} · ${ROLE.headline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(`/og/${og}.png`, Astro.site);
 ---
