@@ -45,7 +45,7 @@ const lines = [
       {SITE.cv && <a href={SITE.cv} download>Download CV</a>}
       <a href="/about/">About me</a>
     </p>
-    <a class="hero-more" href="#work">Work and writing below</a>
+    <a class="hero-more" href="#work" data-hero-more>Work and writing below</a>
   </section>
 
   <div id="work">
@@ -63,11 +63,11 @@ const lines = [
 
     <section class="section">
       <div class="section-head">
-        <h2>Latest blog post</h2>
+        <h2>Latest blog posts</h2>
         <a href="/posts/">all posts</a>
       </div>
       <ol class="index">
-        {postsT.slice(0, 1).map(({ entry, minutes }) => (
+        {postsT.map(({ entry, minutes }) => (
           <Card compact href={`/posts/${entry.id}/`} title={entry.data.title} description={entry.data.description} date={entry.data.date} tags={entry.data.tags} minutes={minutes} />
         ))}
       </ol>
@@ -87,6 +87,64 @@ const lines = [
 </Base>
 
 <script>
+  // Dynamic hero: full-screen and centred at the top of the page, collapsed to its
+  // content once the reader scrolls, expanded again when they return to the top.
+  let compact = false;
+  let lock = 0;
+  const hero = () => document.querySelector<HTMLElement>('.hero-center');
+
+  function gapEstimate(h: HTMLElement) {
+    const kids = [...h.children].filter((c) => !c.hasAttribute('data-hero-more')) as HTMLElement[];
+    const top = kids[0]?.getBoundingClientRect().top ?? 0;
+    const bottom = kids[kids.length - 1]?.getBoundingClientRect().bottom ?? 0;
+    return h.getBoundingClientRect().height - (bottom - top) - 96;
+  }
+  function setCompact(h: HTMLElement, on: boolean) {
+    compact = on;
+    h.classList.toggle('is-compact', on);
+    lock = Date.now();
+  }
+  function onScroll() {
+    const h = hero();
+    if (!h) return;
+    const y = window.scrollY;
+    if (!compact && y > 40) {
+      // Shrink by the empty space, but never so much that the page stops being
+      // scrollable (the browser would clamp to the top and the hero would bounce).
+      const gap = gapEstimate(h);
+      const spare = document.documentElement.scrollHeight - innerHeight - 120;
+      const shrink = Math.min(gap, spare);
+      if (shrink > 40) {
+        h.style.setProperty('--hero-compact-min', `${Math.round(h.getBoundingClientRect().height - shrink)}px`);
+        setCompact(h, true);
+      }
+    } else if (compact && y <= 2 && Date.now() - lock > 500) {
+      setCompact(h, false);
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  document.addEventListener('click', (e) => {
+    const a = (e.target as HTMLElement).closest('[data-hero-more]');
+    const h = hero();
+    if (!a || !h) return;
+    e.preventDefault();
+    const target = document.getElementById('work');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!compact && !reduce) {
+      setCompact(h, true);
+      window.setTimeout(() => target?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 480);
+    } else {
+      target?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    }
+  });
+  document.addEventListener('astro:page-load', () => {
+    const h = hero();
+    if (!h) return;
+    compact = false;
+    h.classList.remove('is-compact');
+    if (window.scrollY > 40) onScroll();
+  });
+
   function setOpen(open: boolean) {
     const drawer = document.querySelector<HTMLElement>('[data-term-drawer]');
     const btn = document.querySelector<HTMLElement>('[data-term-open]');

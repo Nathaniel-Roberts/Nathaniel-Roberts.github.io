@@ -563,3 +563,10 @@ kbd { font: 0.7rem var(--font-mono); border: 1px solid var(--line-2); border-rad
 .row--compact { padding: 0.8rem 0; }
 .row--compact .row-title { font-size: 1.05rem; font-weight: 500; }
 @media (max-width: 640px) { .hero-center .avatar { width: 7rem; height: 7rem; } }
+
+/* ---------- Dynamic hero collapse ---------- */
+.hero-center { transition: min-height 480ms var(--ease), padding-bottom 480ms var(--ease); }
+.hero-center.is-compact { min-height: var(--hero-compact-min, 0px); padding-bottom: 3rem; }
+.hero-more { transition: opacity 250ms var(--ease); }
+.hero-center.is-compact .hero-more { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .hero-center { transition: none; } }
