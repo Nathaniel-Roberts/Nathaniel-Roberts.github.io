@@ -54,7 +54,7 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
     blog: '/posts/', posts: '/posts/', writing: '/posts/',
     projects: '/projects/', work: '/projects/',
     about: '/about/', me: '/about/', uses: '/uses/', setup: '/uses/', homelab: '/uses/',
-    contact: '/contact/', rss: '/rss.xml',
+    contact: '/contact/', rss: '/rss.xml', cv: '/cv.pdf', resume: '/cv.pdf',
   };
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
   const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -66,7 +66,7 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
     switch (cmd.toLowerCase()) {
       case '': return {};
       case 'help': return { text: 'Commands:\n  ls              list sections\n  cd <section>    open blog, projects, about or contact\n  cat role.txt    what I do\n  whoami          who runs this site\n  theme [name]    list or switch colour themes\n  neofetch        about this site\n  date            current time in Sydney\n  clear           clear the screen\n  help            this message' };
-      case 'ls': case 'dir': return { html: ['posts', 'projects', 'uses', 'about', 'contact'].map((s) => `<a href="/${s}/">${s}/</a>`).join('  ') + '  <a href="/rss.xml">rss.xml</a>' };
+      case 'ls': case 'dir': return { html: ['posts', 'projects', 'uses', 'about', 'contact'].map((s) => `<a href="/${s}/">${s}/</a>`).join('  ') + '  <a href="/rss.xml">rss.xml</a>  <a href="/cv.pdf">cv.pdf</a>' };
       case 'cd': case 'open': case 'goto':
         if (key in ROUTES) return { text: `Opening ${ROUTES[key]}`, go: ROUTES[key] };
         return { text: `cd: no such file or directory: ${arg || '~'}`, error: true };

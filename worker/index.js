@@ -10,6 +10,10 @@ const json = (body, status = 200) =>
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.hostname === 'www.nathanielroberts.tech') {
+      url.hostname = 'nathanielroberts.tech';
+      return Response.redirect(url.toString(), 301);
+    }
     if (url.pathname === '/api/contact') return contact(request, env);
     if (url.pathname.startsWith('/api/')) return json({ error: 'Not found' }, 404);
     return env.ASSETS.fetch(request);
