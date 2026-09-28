@@ -2,6 +2,9 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nathanielroberts-tech",
   "compatibility_date": "2026-09-01",
+  "workers_dev": true,
+  "preview_urls": true,
+  "routes": [{ "pattern": "nathanielroberts.tech", "custom_domain": true }],
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page",

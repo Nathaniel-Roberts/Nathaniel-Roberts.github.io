@@ -5,17 +5,17 @@ const description = 'Questions, project ideas or collaborations. Email is best; 
 ---
 
 <Base title="Contact" description={description} og="contact">
-  <header class="page-head reveal">
+  <header class="page-head">
     <p class="eyebrow">~/contact</p>
     <h1>Contact</h1>
     <p class="lede">{description}</p>
   </header>
 
-  <ul class="contact-list stagger">
+  <ul class="contact-list">
     <li>
       <span class="k">Email</span>
       <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
-      <button class="chip copy" type="button" data-copy={SITE.email} aria-label="Copy email address">copy</button>
+      <button class="copy" type="button" data-copy={SITE.email} aria-label="Copy email address">copy</button>
     </li>
     <li>
       <span class="k">GitHub</span>

@@ -17,7 +17,7 @@ export async function getStaticPaths() {
   }));
   const projects = (await getCollection('projects')).map((p) => ({
     slug: `projects/${p.id}`,
-    props: { title: p.data.title, description: p.data.description, eyebrow: `cat ~/projects/${p.id}.md`, footer: `${p.data.type}  ·  ${fmtDateShort(p.data.date)}` },
+    props: { title: p.data.title, description: p.data.description, eyebrow: `cat ~/projects/${p.id}.md`, footer: `${p.data.type}, ${fmtDateShort(p.data.date)}` },
   }));
   return [...statics, ...posts, ...projects].map(({ slug, props }) => ({ params: { slug }, props }));
 }

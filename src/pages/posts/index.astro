@@ -11,18 +11,18 @@ const description = 'Notes on security, automation and the work of keeping IT in
 ---
 
 <Base title="Blog" description={description} og="posts">
-  <header class="page-head reveal">
+  <header class="page-head">
     <p class="eyebrow">~/posts</p>
     <h1>Blog</h1>
     <p class="lede">{description}</p>
   </header>
-  <div class="reveal">
+  <div>
     <TagFilter tags={tags} noun="posts" />
-    <div class="grid stagger" data-filter-target>
+    <ol class="index" data-filter-target>
       {items.map(({ p, minutes }) => (
         <Card href={`/posts/${p.id}/`} title={p.data.title} description={p.data.description} date={p.data.date} tags={p.data.tags} minutes={minutes} />
       ))}
-    </div>
+    </ol>
     <p class="empty" data-empty hidden>Nothing matches that tag.</p>
   </div>
 </Base>

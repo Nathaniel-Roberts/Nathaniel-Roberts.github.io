@@ -12,18 +12,18 @@ const description = 'Penetration test reports, incident analyses, privacy assess
 ---
 
 <Base title="Projects" description={description} og="projects">
-  <header class="page-head reveal">
+  <header class="page-head">
     <p class="eyebrow">~/projects</p>
     <h1>Projects</h1>
     <p class="lede">{description}</p>
   </header>
-  <div class="reveal">
+  <div>
     <TagFilter tags={[...new Set([...types, ...tags])]} noun="projects" />
-    <div class="grid stagger" data-filter-target>
+    <ol class="index" data-filter-target>
       {items.map(({ p, minutes }) => (
         <Card href={`/projects/${p.id}/`} title={p.data.title} description={p.data.description} date={p.data.date} type={p.data.type} tags={p.data.tags} minutes={minutes} />
       ))}
-    </div>
+    </ol>
     <p class="empty" data-empty hidden>Nothing matches that tag.</p>
   </div>
 </Base>

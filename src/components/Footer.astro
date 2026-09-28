@@ -7,10 +7,10 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="wrap">
     <div>
-      © {SITE.since}{year > SITE.since ? ` to ${year}` : ''} {SITE.name}{' '}
+      © {SITE.since}{year > SITE.since ? ` to ${year}` : ''} {SITE.name}.{' '}
       {BUILD.short && (
         <>
-          · built from <a href={`${SITE.repo}/commit/${BUILD.sha}`} rel="noopener" target="_blank"><code>{BUILD.short}</code></a>
+          Built from <a href={`${SITE.repo}/commit/${BUILD.sha}`} rel="noopener" target="_blank"><code>{BUILD.short}</code></a>.
         </>
       )}
     </div>

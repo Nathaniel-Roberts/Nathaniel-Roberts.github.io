@@ -18,10 +18,7 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
 ---
 
 <div class="term" data-term data-tagline={SITE.tagline} data-whoami={ROLE.whoami}>
-  <div class="term-bar" aria-hidden="true">
-    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-    <span class="term-title">{title}</span>
-  </div>
+  <div class="term-bar" aria-hidden="true">{title}</div>
   <div class="term-body" data-term-body>
     {lines.map((l) => (
       <div class="t-block" data-block>

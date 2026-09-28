@@ -24,7 +24,7 @@ const lines = [
 ---
 
 <Base>
-  <section class="hero reveal" aria-label="Introduction">
+  <section class="hero" aria-label="Introduction">
     <Terminal lines={lines}>
       <div slot="whoami" class="t-who">
         <Image class="avatar" src={avatar} alt="" width="112" height="112" densities={[1, 2]} loading="eager" />
@@ -38,11 +38,11 @@ const lines = [
       <h2>Featured projects</h2>
       <a href="/projects/">all projects</a>
     </div>
-    <div class="grid stagger">
+    <ol class="index">
       {featuredT.map(({ entry, minutes }) => (
         <Card href={`/projects/${entry.id}/`} title={entry.data.title} description={entry.data.description} date={entry.data.date} type={entry.data.type} tags={entry.data.tags} minutes={minutes} />
       ))}
-    </div>
+    </ol>
   </section>
 
   <section class="section">
@@ -50,20 +50,20 @@ const lines = [
       <h2>Latest writing</h2>
       <a href="/posts/">all posts</a>
     </div>
-    <div class="grid stagger">
+    <ol class="index">
       {postsT.map(({ entry, minutes }) => (
         <Card href={`/posts/${entry.id}/`} title={entry.data.title} description={entry.data.description} date={entry.data.date} tags={entry.data.tags} minutes={minutes} />
       ))}
-    </div>
+    </ol>
   </section>
 
   <section class="section">
     <div class="section-head"><h2>Elsewhere</h2></div>
-    <div class="elsewhere">
-      <a class="btn" href={SITE.github} target="_blank" rel="noopener me">GitHub</a>
-      <a class="btn" href={SITE.linkedin} target="_blank" rel="noopener me">LinkedIn</a>
-      <a class="btn" href={`mailto:${SITE.email}`}>Email</a>
-      <a class="btn" href="/rss.xml">RSS</a>
-    </div>
+    <p class="linkrow">
+      <a href={SITE.github} target="_blank" rel="noopener me">GitHub</a>
+      <a href={SITE.linkedin} target="_blank" rel="noopener me">LinkedIn</a>
+      <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      <a href="/rss.xml">RSS feed</a>
+    </p>
   </section>
 </Base>

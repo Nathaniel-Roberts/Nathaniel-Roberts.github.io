@@ -4,8 +4,8 @@ const { tags, noun } = Astro.props;
 ---
 
 <div class="filter" data-filter role="group" aria-label={`Filter ${noun} by tag`}>
-  <button class="chip" type="button" data-tag="" aria-pressed="true">all</button>
-  {tags.map((t) => <button class="chip" type="button" data-tag={t} aria-pressed="false">#{t}</button>)}
+  <button class="ftag" type="button" data-tag="" aria-pressed="true">all</button>
+  {tags.map((t) => <button class="ftag" type="button" data-tag={t} aria-pressed="false">{t}</button>)}
   <span class="count" data-count aria-live="polite"></span>
 </div>
 

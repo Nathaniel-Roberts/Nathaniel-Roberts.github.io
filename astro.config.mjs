@@ -21,7 +21,7 @@ export default defineConfig({
         rehypeContent,
       ],
     }),
-    shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' }, defaultColor: false },
+    shikiConfig: { themes: { light: 'min-light', dark: 'min-dark' }, defaultColor: false },
   },
   image: { responsiveStyles: true },
   vite: { build: { assetsInlineLimit: 0 } },
