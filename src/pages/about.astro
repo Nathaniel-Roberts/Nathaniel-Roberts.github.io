@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { SITE, ROLE, STARTED_NEXT } from '../site';
 import avatar from '../assets/avatar.jpg';
+import Contributions from '../components/Contributions.astro';
 
 const description = STARTED_NEXT
   ? 'Cybersecurity Incident Response Analyst at PepsiCo with a systems engineering background.'
@@ -105,6 +106,8 @@ const skills = [
           ))}
         </ul>
       </section>
+
+      <Contributions />
     </div>
 
     <aside>

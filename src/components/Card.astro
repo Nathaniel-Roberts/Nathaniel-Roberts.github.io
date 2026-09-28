@@ -8,22 +8,23 @@ interface Props {
   type?: string;
   tags?: string[];
   minutes?: number;
+  compact?: boolean;
 }
-const { href, title, description, date, type, tags = [], minutes } = Astro.props;
+const { href, title, description, date, type, tags = [], minutes, compact = false } = Astro.props;
 const filterKeys = [type?.toLowerCase(), ...tags].filter(Boolean).join(' ');
 ---
 
-<li class="row" data-tags={filterKeys}>
+<li class={`row ${compact ? 'row--compact' : ''}`} data-tags={filterKeys}>
   <time class="row-date" datetime={isoDate(date)}>{fmtDateShort(date)}</time>
   <div>
     <h3 class="row-title" transition:name={`title-${href}`}><a href={href}>{title}</a></h3>
-    <p class="row-desc">{description}</p>
-    {(type || tags.length > 0) && (
+    {!compact && <p class="row-desc">{description}</p>}
+    {!compact && (type || tags.length > 0) && (
       <p class="row-meta">
         {type && <span class="row-type">{type}</span>}
         {tags.map((t) => <span>{t.replace(/-/g, ' ')}</span>)}
       </p>
     )}
   </div>
-  {minutes && <span class="row-time">{minutes} min</span>}
+  {compact ? (type ? <span class="row-time">{type}</span> : minutes && <span class="row-time">{minutes} min</span>) : minutes && <span class="row-time">{minutes} min</span>}
 </li>
