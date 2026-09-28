@@ -54,6 +54,48 @@
   }
 }
 
+/* ---------- Alternative palettes (chosen from the theme menu) ---------- */
+[data-theme='mocha'] {
+  --bg: #1e1e2e; --bg-2: #181825; --fg: #cdd6f4; --fg-2: #bac2de; --muted: #8b8fa8;
+  --line: #313244; --line-2: #45475a; --accent: #cba6f7; --accent-soft: rgba(203,166,247,0.14); --accent-fg: #1e1e2e;
+  --danger: #f38ba8; --code-bg: #181825; color-scheme: dark;
+}
+[data-theme='latte'] {
+  --bg: #eff1f5; --bg-2: #e6e9ef; --fg: #4c4f69; --fg-2: #5c5f77; --muted: #7c7f93;
+  --line: #ccd0da; --line-2: #bcc0cc; --accent: #8839ef; --accent-soft: rgba(136,57,239,0.1); --accent-fg: #ffffff;
+  --danger: #d20f39; --code-bg: #e6e9ef; color-scheme: light;
+}
+[data-theme='nord'] {
+  --bg: #2e3440; --bg-2: #3b4252; --fg: #eceff4; --fg-2: #d8dee9; --muted: #8a94a8;
+  --line: #3b4252; --line-2: #4c566a; --accent: #88c0d0; --accent-soft: rgba(136,192,208,0.14); --accent-fg: #2e3440;
+  --danger: #bf616a; --code-bg: #272c36; color-scheme: dark;
+}
+[data-theme='gruvbox'] {
+  --bg: #282828; --bg-2: #32302f; --fg: #ebdbb2; --fg-2: #d5c4a1; --muted: #928374;
+  --line: #3c3836; --line-2: #504945; --accent: #fe8019; --accent-soft: rgba(254,128,25,0.14); --accent-fg: #282828;
+  --danger: #fb4934; --code-bg: #1d2021; color-scheme: dark;
+}
+[data-theme='rose-pine'] {
+  --bg: #191724; --bg-2: #1f1d2e; --fg: #e0def4; --fg-2: #b4b0cf; --muted: #8a86a5;
+  --line: #26233a; --line-2: #403d52; --accent: #f6c177; --accent-soft: rgba(246,193,119,0.14); --accent-fg: #191724;
+  --danger: #eb6f92; --code-bg: #1f1d2e; color-scheme: dark;
+}
+[data-theme='tokyo-night'] {
+  --bg: #1a1b26; --bg-2: #16161e; --fg: #c0caf5; --fg-2: #a9b1d6; --muted: #7982a9;
+  --line: #292e42; --line-2: #414868; --accent: #7aa2f7; --accent-soft: rgba(122,162,247,0.14); --accent-fg: #1a1b26;
+  --danger: #f7768e; --code-bg: #16161e; color-scheme: dark;
+}
+[data-theme='solarized-dark'] {
+  --bg: #002b36; --bg-2: #073642; --fg: #eee8d5; --fg-2: #93a1a1; --muted: #7a8f96;
+  --line: #073642; --line-2: #586e75; --accent: #b58900; --accent-soft: rgba(181,137,0,0.16); --accent-fg: #002b36;
+  --danger: #dc322f; --code-bg: #00252e; color-scheme: dark;
+}
+[data-theme='solarized-light'] {
+  --bg: #fdf6e3; --bg-2: #eee8d5; --fg: #073642; --fg-2: #586e75; --muted: #7d8b8e;
+  --line: #e6dfc8; --line-2: #d3cbb7; --accent: #cb4b16; --accent-soft: rgba(203,75,22,0.1); --accent-fg: #ffffff;
+  --danger: #dc322f; --code-bg: #eee8d5; color-scheme: light;
+}
+
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 5rem; }
@@ -124,8 +166,6 @@ kbd { font: 0.7rem var(--font-mono); border: 1px solid var(--line-2); border-rad
 }
 .icon-btn:hover { color: var(--fg); border-color: var(--line-2); }
 .icon-btn svg { width: 1.05rem; height: 1.05rem; }
-[data-theme='dark'] .icon-sun { display: none; }
-:root:not([data-theme='dark']) .icon-moon { display: none; }
 .search-btn {
   display: inline-flex; gap: 0.5rem; align-items: center; height: 2.1rem; padding: 0 0.6rem;
   border: 1px solid var(--line); border-radius: var(--radius); background: transparent; color: var(--muted);
@@ -281,7 +321,7 @@ kbd { font: 0.7rem var(--font-mono); border: 1px solid var(--line-2); border-rad
 .prose pre { background: var(--code-bg) !important; border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.1rem; overflow: auto; font-size: 0.85rem; line-height: 1.6; margin: 1.5em 0; }
 .prose pre code { background: transparent; padding: 0; font-size: inherit; }
 .astro-code, .astro-code span { color: var(--shiki-light); }
-[data-theme='dark'] .astro-code, [data-theme='dark'] .astro-code span { color: var(--shiki-dark); }
+[data-scheme='dark'] .astro-code, [data-scheme='dark'] .astro-code span { color: var(--shiki-dark); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme]) .astro-code, :root:not([data-theme]) .astro-code span { color: var(--shiki-dark); } }
 .code-wrap { position: relative; }
 .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; font: 0.72rem var(--font-mono); padding: 0.25rem 0.5rem; border-radius: 3px; border: 1px solid var(--line-2); background: var(--bg-2); color: var(--fg-2); cursor: pointer; opacity: 0; transition: opacity var(--dur); }
@@ -347,3 +387,24 @@ kbd { font: 0.7rem var(--font-mono); border: 1px solid var(--line-2); border-rad
 .contact-list a:hover { color: var(--accent); }
 .contact-list .copy { margin-left: auto; background: none; border: 0; padding: 0; font: 0.8rem var(--font-mono); color: var(--muted); cursor: pointer; }
 .contact-list .copy:hover { color: var(--accent); }
+
+/* ---------- Theme menu ---------- */
+.header-actions { position: relative; }
+.theme-menu { position: absolute; right: 0; top: calc(100% + 0.5rem); min-width: 13.5rem; padding: 0.3rem; background: var(--bg-2); border: 1px solid var(--line-2); border-radius: var(--radius); z-index: 60; box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.35); }
+.theme-menu[hidden] { display: none; }
+.theme-menu button { display: flex; align-items: center; gap: 0.65rem; width: 100%; text-align: left; padding: 0.42rem 0.6rem; background: none; border: 0; border-radius: 3px; color: var(--fg); font: 0.85rem var(--font-sans); cursor: pointer; }
+.theme-menu button:hover { background: var(--accent-soft); }
+.theme-menu button[aria-checked='true']::after { content: '✓'; margin-left: auto; color: var(--accent); font-family: var(--font-mono); }
+.theme-menu hr { border: 0; border-top: 1px solid var(--line); margin: 0.3rem 0; }
+.sw { width: 0.85rem; height: 0.85rem; border-radius: 50%; border: 2px solid; flex: none; }
+.sw-system { background: linear-gradient(90deg, #f4f5f7 50%, #0f1115 50%); border-color: var(--line-2); }
+.sw-light { background: #f4f5f7; border-color: #a3501b; }
+.sw-dark { background: #0f1115; border-color: #e0a458; }
+.sw-mocha { background: #1e1e2e; border-color: #cba6f7; }
+.sw-latte { background: #eff1f5; border-color: #8839ef; }
+.sw-nord { background: #2e3440; border-color: #88c0d0; }
+.sw-gruvbox { background: #282828; border-color: #fe8019; }
+.sw-rose-pine { background: #191724; border-color: #f6c177; }
+.sw-tokyo-night { background: #1a1b26; border-color: #7aa2f7; }
+.sw-solarized-dark { background: #002b36; border-color: #b58900; }
+.sw-solarized-light { background: #fdf6e3; border-color: #cb4b16; }

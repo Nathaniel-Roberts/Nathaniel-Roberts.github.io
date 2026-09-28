@@ -64,7 +64,7 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
     const key = arg.replace(/^~?\/?/, '').replace(/\/$/, '').toLowerCase();
     switch (cmd.toLowerCase()) {
       case '': return {};
-      case 'help': return { text: 'Commands:\n  ls              list sections\n  cd <section>    open blog, projects, about or contact\n  cat role.txt    what I do\n  whoami          who runs this site\n  theme           toggle light and dark mode\n  date            current time in Sydney\n  clear           clear the screen\n  help            this message' };
+      case 'help': return { text: 'Commands:\n  ls              list sections\n  cd <section>    open blog, projects, about or contact\n  cat role.txt    what I do\n  whoami          who runs this site\n  theme [name]    list or switch colour themes\n  date            current time in Sydney\n  clear           clear the screen\n  help            this message' };
       case 'ls': case 'dir': return { html: ['posts', 'projects', 'about', 'contact'].map((s) => `<a href="/${s}/">${s}/</a>`).join('  ') + '  <a href="/rss.xml">rss.xml</a>' };
       case 'cd': case 'open': case 'goto':
         if (key in ROUTES) return { text: `Opening ${ROUTES[key]}`, go: ROUTES[key] };
@@ -79,7 +79,14 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
         if (/(flag|passw|secret|shadow|id_rsa)/i.test(arg)) return { text: `cat: ${arg}: Permission denied. Nice try though.`, error: true };
         return { text: arg ? `cat: ${arg}: No such file or directory` : 'cat: missing file operand', error: true };
       case 'echo': return { text: arg };
-      case 'theme': (document.querySelector('[data-theme-toggle]') as HTMLElement | null)?.click(); return { text: `Switched to ${document.documentElement.dataset.theme} mode.` };
+      case 'theme': {
+        const w = window as any;
+        const names: string[] = w.siteThemes || [];
+        if (!arg) return { text: `Current theme: ${document.documentElement.dataset.themeChoice || 'system'}\nAvailable: ${names.join(', ')}\nUsage: theme <name>` };
+        const want = arg.toLowerCase().replace(/\s+/g, '-');
+        if (w.setSiteTheme?.(want)) return { text: `Theme set to ${want}.` };
+        return { text: `theme: unknown theme "${arg}". Try: ${names.join(', ')}`, error: true };
+      }
       case 'clear': case 'cls': return { clear: true };
       case 'sudo': return { text: 'nathaniel is not in the sudoers file. This incident will be reported.', error: true };
       case 'rm': return { text: 'rm: refusing to remove anything. This is a portfolio, not a honeypot.', error: true };
@@ -180,7 +187,7 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
       else if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); form.requestSubmit(); input.value = 'clear'; form.requestSubmit(); }
       else if (e.key === 'Tab') {
         const v = input.value.trim().toLowerCase();
-        const words = ['help', 'ls', 'cd projects', 'cd posts', 'cd about', 'cd contact', 'cat role.txt', 'whoami', 'theme', 'clear', 'date'];
+        const words = ['help', 'ls', 'cd projects', 'cd posts', 'cd about', 'cd contact', 'cat role.txt', 'whoami', 'theme', 'theme mocha', 'theme system', 'clear', 'date'];
         const m = words.find((w) => v && w.startsWith(v));
         if (m) { e.preventDefault(); input.value = m; }
       }

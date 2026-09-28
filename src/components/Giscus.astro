@@ -11,7 +11,7 @@ import { SITE } from '../site';
 </section>
 
 <script>
-  const themeFor = () => (document.documentElement.dataset.theme === 'dark' ? 'noborder_dark' : 'noborder_light');
+  const themeFor = () => (document.documentElement.dataset.scheme === 'dark' ? 'noborder_dark' : 'noborder_light');
 
   function mount() {
     const host = document.querySelector<HTMLElement>('[data-giscus]');
