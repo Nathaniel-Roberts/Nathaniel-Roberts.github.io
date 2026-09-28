@@ -11,8 +11,9 @@ const currentRole = {
   tagline: 'Cybersecurity | Incident Response | Automation | Applied AI',
   description:
     'Systems engineer with a cybersecurity background, writing about security, automation and IT infrastructure. Penetration test reports, incident analyses and privacy assessments.',
+  summary: 'Systems engineer moving into cybersecurity incident response at PepsiCo from October 2026.',
   intro:
-    "I'm a systems engineer with a cybersecurity background. Day to day I look after IT infrastructure: building it, supporting it, and automating the parts that shouldn't need a human. Security isn't a separate job to me. It's the lens I use for everything from a server build to a script.",
+    "I'm a systems engineer with a cybersecurity degree from Macquarie University. I build, secure and automate IT infrastructure, and in October 2026 I join PepsiCo as a Cybersecurity Incident Response Analyst. I like systems that are segmented, backed up, monitored and written down.",
   now: 'Working as an ICT Systems Engineer, automating the repetitive parts of IT operations, and getting ready to move into incident response at PepsiCo in October 2026.',
   whoami: 'Nathaniel Roberts. Systems engineer, soon incident responder. Security first, automate the rest.',
 };
@@ -24,8 +25,9 @@ const nextRole = {
   tagline: 'Cybersecurity | Incident Response | Automation | Applied AI',
   description:
     'Cybersecurity incident response analyst with a systems engineering background, writing about detection, response, automation and IT infrastructure. Penetration test reports, incident analyses and privacy assessments.',
+  summary: 'Cybersecurity Incident Response Analyst at PepsiCo, with a systems engineering background.',
   intro:
-    "I'm a cybersecurity incident response analyst at PepsiCo, with a systems engineering background. I came to security from the operations side: building and supporting infrastructure taught me how systems actually behave, which is exactly what you need when one of them is misbehaving on purpose.",
+    "I'm a Cybersecurity Incident Response Analyst at PepsiCo with a systems engineering background and a cybersecurity degree from Macquarie University. I came to security from the operations side: building and supporting infrastructure taught me how systems behave, which is what you need when one of them is misbehaving on purpose.",
   now: 'Working in incident response at PepsiCo, automating the repetitive parts of detection and triage, and writing up security work here as I go.',
   whoami: 'Nathaniel Roberts. Incident response analyst at PepsiCo. Security first, automate the rest.',
 };
@@ -42,6 +44,7 @@ export const SITE = {
   linkedin: 'https://linkedin.com/in/nathaniel-g-roberts/',
   repo: 'https://github.com/Nathaniel-Roberts/Nathaniel-Roberts.github.io',
   since: 2024,
+  location: 'NSW, Australia',
   // Drop a PDF in public/ and set this to e.g. '/cv.pdf' to show the CV button.
   cv: null as string | null,
   // Cloudflare Web Analytics site token (Analytics and Logs, Web Analytics, Add a site). null disables the beacon.

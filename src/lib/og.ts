@@ -32,7 +32,7 @@ export async function renderOg({ title, description = '', eyebrow, footer }: OgI
   const tree = h(
     'div',
     { style: { width: '1200px', height: '630px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '60px 72px 56px', background: '#0f1115', color: '#e6e8eb', fontFamily: 'IBM Plex Sans' } },
-    h('div', { style: { display: 'flex', fontFamily: 'IBM Plex Mono', fontSize: 26, color: '#7d858f' } }, h('div', { style: { display: 'flex', color: '#e0a458', marginRight: 14 } }, '$'), h('div', { style: { display: 'flex' } }, eyebrow)),
+    h('div', { style: { display: 'flex', fontSize: 26, color: '#a6adb7' } }, eyebrow),
     h(
       'div',
       { style: { display: 'flex', flexDirection: 'column', gap: 22 } },

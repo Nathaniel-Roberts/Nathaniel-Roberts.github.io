@@ -9,6 +9,7 @@ const keys = [
   ['g', 'then', 'a', 'About'],
   ['g', 'then', 'c', 'Contact'],
   ['t', '', '', 'Theme menu'],
+  ['`', '', '', 'Terminal (home page)'],
   ['?', '', '', 'This list'],
   ['Esc', '', '', 'Close'],
 ];
@@ -43,6 +44,7 @@ const keys = [
     if (e.key === 'Escape' && h?.open) { h.close(); return; }
     if (e.key === '?') { e.preventDefault(); h?.open ? h.close() : h?.showModal(); return; }
     if (h?.open) return;
+    if (e.key === '`') { e.preventDefault(); document.dispatchEvent(new CustomEvent('term:toggle')); return; }
     if (e.key === 't') { e.preventDefault(); (document.querySelector('[data-theme-toggle]') as HTMLElement | null)?.click(); return; }
     if (e.key === 'g') { pendingG = Date.now(); return; }
     if (pendingG && Date.now() - pendingG < 1200 && GO[e.key]) { e.preventDefault(); pendingG = 0; navigate(GO[e.key]); return; }

@@ -232,12 +232,14 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
     });
   }
 
-  document.addEventListener('astro:page-load', () => {
+  function maybeStart() {
     document.querySelectorAll<HTMLElement>('[data-term]').forEach((term) => {
-      if (term.dataset.bound) return;
-      term.dataset.bound = '1';
-      bind(term);
+      if (!term.dataset.bound) { term.dataset.bound = '1'; bind(term); }
+      if (term.dataset.started || term.closest('[hidden]')) return;
+      term.dataset.started = '1';
       void typeIntro(term);
     });
-  });
+  }
+  document.addEventListener('astro:page-load', maybeStart);
+  document.addEventListener('term:open', maybeStart);
 </script>

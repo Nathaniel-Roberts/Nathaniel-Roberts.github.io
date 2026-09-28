@@ -21,7 +21,7 @@ const filterKeys = [type?.toLowerCase(), ...tags].filter(Boolean).join(' ');
     {(type || tags.length > 0) && (
       <p class="row-meta">
         {type && <span class="row-type">{type}</span>}
-        {tags.map((t) => <span>#{t}</span>)}
+        {tags.map((t) => <span>{t.replace(/-/g, ' ')}</span>)}
       </p>
     )}
   </div>

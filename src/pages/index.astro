@@ -32,13 +32,19 @@ const lines = [
 ---
 
 <Base jsonld={jsonld}>
-  <section class="hero" aria-label="Introduction">
-    <Terminal lines={lines} info={termInfo}>
-      <div slot="whoami" class="t-who">
-        <Image class="avatar" src={avatar} alt="" width="112" height="112" densities={[1, 2]} loading="eager" />
-        <h1>{SITE.name}</h1>
+  <section class="hero-plain" aria-label="Introduction">
+    <Image class="avatar" src={avatar} alt={`Photo of ${SITE.name}`} width="240" height="240" densities={[1, 2]} loading="eager" />
+    <div>
+      <h1>{SITE.name}</h1>
+      <p class="hero-role">{ROLE.summary}</p>
+      <p class="hero-meta">{SITE.location}. Security, automation and IT infrastructure, written up in full.</p>
+      <div class="btn-row">
+        {SITE.cv && <a class="btn btn--primary" href={SITE.cv} download>Download CV</a>}
+        <a class={`btn ${SITE.cv ? '' : 'btn--primary'}`} href="/about/">About me</a>
+        <a class="btn" href={SITE.linkedin} target="_blank" rel="noopener me">LinkedIn</a>
+        <a class="btn" href={`mailto:${SITE.email}`}>Email</a>
       </div>
-    </Terminal>
+    </div>
   </section>
 
   <section class="section">
@@ -76,4 +82,41 @@ const lines = [
       <a href="/rss.xml">RSS feed</a>
     </p>
   </section>
+
+  <p class="term-toggle"><button type="button" class="linkish" data-term-open aria-expanded="false" aria-controls="terminal">Open terminal</button></p>
+  <section class="term-drawer" id="terminal" data-term-drawer hidden aria-label="Interactive terminal">
+    <Terminal lines={lines} info={termInfo}>
+      <div slot="whoami" class="t-who">
+        <Image class="avatar" src={avatar} alt="" width="112" height="112" densities={[1, 2]} />
+        <h2 class="t-name">{SITE.name}</h2>
+      </div>
+    </Terminal>
+    <p class="term-toggle"><button type="button" class="linkish" data-term-close>Hide terminal</button></p>
+  </section>
 </Base>
+
+<script>
+  function setOpen(open: boolean) {
+    const drawer = document.querySelector<HTMLElement>('[data-term-drawer]');
+    const btn = document.querySelector<HTMLElement>('[data-term-open]');
+    if (!drawer || !btn) return;
+    drawer.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.textContent = open ? 'Terminal is open below' : 'Open terminal';
+    if (open) {
+      document.dispatchEvent(new CustomEvent('term:open'));
+      drawer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    if (t.closest('[data-term-open]')) setOpen(true);
+    else if (t.closest('[data-term-close]')) setOpen(false);
+  });
+  document.addEventListener('term:toggle', () => {
+    const drawer = document.querySelector<HTMLElement>('[data-term-drawer]');
+    if (drawer) setOpen(Boolean(drawer.hidden));
+  });
+</script>
