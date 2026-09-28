@@ -1,0 +1,143 @@
+---
+import type { MarkdownHeading } from 'astro';
+import Base from './Base.astro';
+import Toc from '../components/Toc.astro';
+import Giscus from '../components/Giscus.astro';
+import { SITE, fmtDate, isoDate } from '../site';
+
+interface Props {
+  title: string;
+  description: string;
+  date: Date;
+  updated?: Date;
+  tags: string[];
+  type?: string;
+  minutes: number;
+  words: number;
+  headings: MarkdownHeading[];
+  og: string;
+  comments?: boolean;
+  back: { href: string; label: string };
+  sourcePath: string;
+}
+const { title, description, date, updated, tags, type, minutes, words, headings, og, comments = false, back, sourcePath } = Astro.props;
+const tocHeadings = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const hasToc = tocHeadings.length >= 3;
+const editUrl = `${SITE.repo}/blob/main/${sourcePath}`;
+---
+
+<Base title={title} description={description} og={og} type="article" published={date}>
+  <div class="progress" data-progress aria-hidden="true"></div>
+  <div class={`article ${hasToc ? 'has-toc' : ''}`}>
+    <div>
+      <header class="article-head reveal">
+        <a class="back" href={back.href}>../{back.label}</a>
+        <div>{type && <span class="chip chip--type">{type}</span>}</div>
+        <h1>{title}</h1>
+        <p class="lede">{description}</p>
+        <div class="meta">
+          <time datetime={isoDate(date)}>{fmtDate(date)}</time>
+          <span class="sep"></span><span>{minutes} min read</span>
+          <span class="sep"></span><span>{words.toLocaleString('en-AU')} words</span>
+          {updated && <><span class="sep"></span><span>updated {fmtDate(updated)}</span></>}
+        </div>
+        {tags.length > 0 && (
+          <div class="chips">
+            {tags.map((t) => <a class="chip" href={`${back.href}?tag=${encodeURIComponent(t)}`}>#{t}</a>)}
+          </div>
+        )}
+      </header>
+
+      {hasToc && (
+        <details class="toc-mobile">
+          <summary>Contents</summary>
+          <Toc headings={tocHeadings} />
+        </details>
+      )}
+
+      <div class="prose reveal" data-prose data-pagefind-body>
+        <slot />
+      </div>
+
+      <footer class="article-foot">
+        <a href={back.href}>Back to {back.label}</a>
+        <a href={editUrl} target="_blank" rel="noopener">View source on GitHub</a>
+      </footer>
+
+      {comments && <Giscus />}
+    </div>
+    {hasToc && (
+      <aside class="toc-side">
+        <Toc headings={tocHeadings} />
+      </aside>
+    )}
+  </div>
+
+  <dialog class="lightbox" data-lightbox aria-label="Image preview">
+    <img alt="" />
+  </dialog>
+</Base>
+
+<script>
+  let observer: IntersectionObserver | null = null;
+
+  function progress() {
+    const bar = document.querySelector<HTMLElement>('[data-progress]');
+    if (!bar) return;
+    const doc = document.documentElement;
+    const max = doc.scrollHeight - innerHeight;
+    bar.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`;
+  }
+
+  function spy() {
+    observer?.disconnect();
+    const prose = document.querySelector('[data-prose]');
+    const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc] a[href^="#"]')];
+    if (!prose || !links.length) return;
+    const setCurrent = (id: string) => links.forEach((a) => a.setAttribute('aria-current', String(a.getAttribute('href') === `#${id}`)));
+    const heads = [...prose.querySelectorAll<HTMLElement>('h2[id], h3[id]')];
+    observer = new IntersectionObserver((entries) => {
+      const hit = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+      if (hit) setCurrent(hit.target.id);
+    }, { rootMargin: '-72px 0px -65% 0px', threshold: 0 });
+    heads.forEach((h) => observer!.observe(h));
+    if (heads[0]) setCurrent(heads[0].id);
+  }
+
+  function copyButtons() {
+    document.querySelectorAll<HTMLPreElement>('[data-prose] pre').forEach((pre) => {
+      if (pre.parentElement?.classList.contains('code-wrap')) return;
+      const wrap = document.createElement('div');
+      wrap.className = 'code-wrap';
+      pre.replaceWith(wrap);
+      wrap.appendChild(pre);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'copy-btn';
+      btn.textContent = 'Copy';
+      btn.addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText(pre.innerText); btn.textContent = 'Copied'; } catch { btn.textContent = 'Failed'; }
+        setTimeout(() => (btn.textContent = 'Copy'), 1500);
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  document.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    const box = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+    if (!box) return;
+    const img = t.closest<HTMLImageElement>('[data-prose] img[data-zoom]');
+    if (img) {
+      const view = box.querySelector('img')!;
+      view.src = img.currentSrc || img.src;
+      view.alt = img.alt;
+      box.showModal();
+      return;
+    }
+    if (box.open && (t === box || t.closest('[data-lightbox]'))) box.close();
+  });
+
+  window.addEventListener('scroll', progress, { passive: true });
+  document.addEventListener('astro:page-load', () => { progress(); spy(); copyButtons(); });
+</script>

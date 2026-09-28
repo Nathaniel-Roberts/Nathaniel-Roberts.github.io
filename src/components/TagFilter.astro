@@ -1,0 +1,50 @@
+---
+interface Props { tags: string[]; noun: string }
+const { tags, noun } = Astro.props;
+---
+
+<div class="filter" data-filter role="group" aria-label={`Filter ${noun} by tag`}>
+  <button class="chip" type="button" data-tag="" aria-pressed="true">all</button>
+  {tags.map((t) => <button class="chip" type="button" data-tag={t} aria-pressed="false">#{t}</button>)}
+  <span class="count" data-count aria-live="polite"></span>
+</div>
+
+<script>
+  function apply(filter: HTMLElement, tag: string, push: boolean) {
+    const grid = filter.parentElement?.querySelector('[data-filter-target]');
+    if (!grid) return;
+    let shown = 0;
+    grid.querySelectorAll<HTMLElement>('[data-tags]').forEach((card) => {
+      const ok = !tag || (card.dataset.tags || '').split(' ').includes(tag);
+      card.hidden = !ok;
+      if (ok) shown++;
+    });
+    filter.querySelectorAll<HTMLElement>('[data-tag]').forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.tag || '') === tag)));
+    const count = filter.querySelector('[data-count]');
+    if (count) count.textContent = `${shown} shown`;
+    const empty = grid.parentElement?.querySelector('[data-empty]') as HTMLElement | null;
+    if (empty) empty.hidden = shown > 0;
+    if (push) {
+      const url = new URL(location.href);
+      if (tag) url.searchParams.set('tag', tag); else url.searchParams.delete('tag');
+      history.replaceState(null, '', url);
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest<HTMLElement>('[data-filter] [data-tag]');
+    if (!btn) return;
+    const filter = btn.closest<HTMLElement>('[data-filter]')!;
+    const current = filter.querySelector<HTMLElement>('[aria-pressed="true"]')?.dataset.tag || '';
+    const next = btn.dataset.tag || '';
+    apply(filter, next === current ? '' : next, true);
+  });
+
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('[data-filter]').forEach((filter) => {
+      const tag = new URL(location.href).searchParams.get('tag') || '';
+      const exists = !tag || !!filter.querySelector(`[data-tag="${tag}"]`);
+      apply(filter, exists ? tag : '', false);
+    });
+  });
+</script>

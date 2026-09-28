@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Terminal from '../components/Terminal.astro';
+
+const lines = [
+  { cmd: 'cd /404', cmdFrom: 'pathname' as const, out: 'bash: cd: no such file or directory', error: true },
+  { cmd: 'ls', links: [
+    { label: 'posts', href: '/posts/' },
+    { label: 'projects', href: '/projects/' },
+    { label: 'about', href: '/about/' },
+    { label: 'contact', href: '/contact/' },
+  ] },
+];
+---
+
+<Base title="Page not found" description="That page does not exist." noindex>
+  <header class="page-head reveal">
+    <p class="eyebrow">404</p>
+    <h1>Page not found</h1>
+    <p class="lede">The path you followed doesn't resolve. The sections that do exist are listed below.</p>
+  </header>
+  <section class="hero reveal">
+    <Terminal lines={lines} title="nathaniel@nathanielroberts.tech: /dev/null" hint='Type "cd projects" or "help".' />
+  </section>
+</Base>

@@ -1,0 +1,201 @@
+---
+export interface TermLine {
+  cmd: string;
+  out?: string;
+  error?: boolean;
+  links?: { label: string; href: string }[];
+  slot?: string;
+  cmdFrom?: 'pathname';
+}
+interface Props {
+  lines: TermLine[];
+  interactive?: boolean;
+  title?: string;
+  hint?: string;
+}
+const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~', hint = 'Type "help" and press Enter.' } = Astro.props;
+---
+
+<div class="term" data-term>
+  <div class="term-bar" aria-hidden="true">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <span class="term-title">{title}</span>
+  </div>
+  <div class="term-body" data-term-body>
+    {lines.map((l) => (
+      <div class="t-block" data-block>
+        <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd" data-cmd={l.cmd} data-cmd-from={l.cmdFrom}>{l.cmd}</span></div>
+        {l.slot && <div class="t-out" data-out><slot name={l.slot} /></div>}
+        {l.out && <div class={`t-out ${l.error ? 't-err' : ''}`} data-out>{l.out}</div>}
+        {l.links && (
+          <div class="t-out t-ls" data-out>
+            {l.links.map((x) => <a href={x.href}>{x.label}/</a>)}
+          </div>
+        )}
+      </div>
+    ))}
+    {interactive && (
+      <>
+        <div class="t-log" data-term-log aria-live="polite"></div>
+        <form class="t-line t-input-line" data-term-form hidden>
+          <span class="t-prompt">$</span>
+          <input type="text" name="cmd" aria-label="Terminal command" autocomplete="off" autocapitalize="off" spellcheck="false" />
+        </form>
+        <p class="t-hint" data-term-hint hidden>{hint}</p>
+      </>
+    )}
+  </div>
+</div>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+
+  const ROUTES: Record<string, string> = {
+    '': '/', '~': '/', '..': '/', home: '/', '/': '/',
+    blog: '/posts/', posts: '/posts/', writing: '/posts/',
+    projects: '/projects/', work: '/projects/',
+    about: '/about/', me: '/about/',
+    contact: '/contact/', rss: '/rss.xml',
+  };
+  const TAGLINE = 'Systems Engineer | Automation | Security-Driven IT Solutions';
+  const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function run(raw: string): { text?: string; html?: string; error?: boolean; clear?: boolean; go?: string } {
+    const [cmd = '', ...rest] = raw.trim().split(/\s+/);
+    const arg = rest.join(' ');
+    const key = arg.replace(/^~?\/?/, '').replace(/\/$/, '').toLowerCase();
+    switch (cmd.toLowerCase()) {
+      case '': return {};
+      case 'help': return { text: 'Commands:\n  ls              list sections\n  cd <section>    open blog, projects, about or contact\n  cat role.txt    what I do\n  whoami          who runs this site\n  theme           toggle light and dark mode\n  date            current time in Sydney\n  clear           clear the screen\n  help            this message' };
+      case 'ls': case 'dir': return { html: ['posts', 'projects', 'about', 'contact'].map((s) => `<a href="/${s}/">${s}/</a>`).join('  ') + '  <a href="/rss.xml">rss.xml</a>' };
+      case 'cd': case 'open': case 'goto':
+        if (key in ROUTES) return { text: `Opening ${ROUTES[key]}`, go: ROUTES[key] };
+        return { text: `cd: no such file or directory: ${arg || '~'}`, error: true };
+      case 'blog': case 'posts': case 'projects': case 'about': case 'contact': return { text: `Opening ${ROUTES[cmd.toLowerCase()]}`, go: ROUTES[cmd.toLowerCase()] };
+      case 'whoami': return { text: 'Nathaniel Roberts. Systems engineer. Security first, automate the rest.' };
+      case 'hostname': return { text: 'nathanielroberts.tech' };
+      case 'pwd': return { text: location.pathname };
+      case 'date': return { text: new Date().toLocaleString('en-AU', { timeZone: 'Australia/Sydney', dateStyle: 'full', timeStyle: 'short' }) + ' (Sydney)' };
+      case 'cat':
+        if (/role\.txt$/i.test(arg)) return { text: TAGLINE };
+        if (/(flag|passw|secret|shadow|id_rsa)/i.test(arg)) return { text: `cat: ${arg}: Permission denied. Nice try though.`, error: true };
+        return { text: arg ? `cat: ${arg}: No such file or directory` : 'cat: missing file operand', error: true };
+      case 'echo': return { text: arg };
+      case 'theme': (document.querySelector('[data-theme-toggle]') as HTMLElement | null)?.click(); return { text: `Switched to ${document.documentElement.dataset.theme} mode.` };
+      case 'clear': case 'cls': return { clear: true };
+      case 'sudo': return { text: 'nathaniel is not in the sudoers file. This incident will be reported.', error: true };
+      case 'rm': return { text: 'rm: refusing to remove anything. This is a portfolio, not a honeypot.', error: true };
+      case 'exit': case 'logout': return { text: 'logout\nThere is no escape. Try "cd projects".' };
+      case 'nmap': return { text: 'Starting Nmap... just kidding. Read the CTF reports under projects/ instead.' };
+      case 'vim': case 'vi': case 'nano': case 'emacs': return { text: `${cmd}: this is a website. Press nothing to exit.` };
+      default: return { text: `${cmd}: command not found. Try "help".`, error: true };
+    }
+  }
+
+  async function typeIntro(term: HTMLElement) {
+    const blocks = [...term.querySelectorAll<HTMLElement>('[data-block]')];
+    const form = term.querySelector<HTMLElement>('[data-term-form]');
+    const hint = term.querySelector<HTMLElement>('[data-term-hint]');
+    const finish = () => {
+      term.classList.remove('is-typing');
+      blocks.forEach((b) => { b.classList.add('is-shown', 'is-done'); const c = b.querySelector<HTMLElement>('[data-cmd]'); if (c) c.textContent = c.dataset.cmd || ''; c?.classList.remove('t-cursor'); });
+      if (form) form.hidden = false;
+      if (hint) hint.hidden = false;
+    };
+    blocks.forEach((b) => {
+      const c = b.querySelector<HTMLElement>('[data-cmd]');
+      if (c?.dataset.cmdFrom === 'pathname') { c.dataset.cmd = `cd ${location.pathname}`; c.textContent = c.dataset.cmd; }
+    });
+    let played = false;
+    try { played = sessionStorage.getItem('term-played') === '1'; } catch {}
+    if (reduced() || played) { finish(); return; }
+
+    let skip = false;
+    const onSkip = () => { skip = true; };
+    term.addEventListener('click', onSkip, { once: true });
+    term.classList.add('is-typing');
+    await sleep(350);
+    for (const block of blocks) {
+      if (skip) break;
+      const cmdEl = block.querySelector<HTMLElement>('[data-cmd]')!;
+      const full = cmdEl.dataset.cmd || '';
+      cmdEl.textContent = '';
+      cmdEl.classList.add('t-cursor');
+      block.classList.add('is-shown');
+      for (const ch of full) {
+        if (skip) break;
+        cmdEl.textContent += ch;
+        await sleep(28 + Math.random() * 45);
+      }
+      await sleep(skip ? 0 : 180);
+      cmdEl.classList.remove('t-cursor');
+      block.classList.add('is-done');
+      await sleep(skip ? 0 : 380);
+    }
+    term.removeEventListener('click', onSkip);
+    finish();
+    try { sessionStorage.setItem('term-played', '1'); } catch {}
+  }
+
+  function bind(term: HTMLElement) {
+    const form = term.querySelector<HTMLFormElement>('[data-term-form]');
+    const input = form?.querySelector<HTMLInputElement>('input');
+    const log = term.querySelector<HTMLElement>('[data-term-log]');
+    if (!form || !input || !log) return;
+    const history: string[] = [];
+    let hi = 0;
+
+    term.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a, button')) return;
+      if (!form.hidden) input.focus({ preventScroll: true });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const raw = input.value;
+      input.value = '';
+      if (raw.trim()) { history.push(raw); hi = history.length; }
+      const res = run(raw);
+      if (res.clear) { log.innerHTML = ''; term.querySelectorAll('[data-block]').forEach((b) => b.remove()); return; }
+      const block = document.createElement('div');
+      block.className = 't-block';
+      const line = document.createElement('div');
+      line.className = 't-line';
+      line.innerHTML = '<span class="t-prompt">$</span><span class="t-cmd"></span>';
+      line.querySelector('.t-cmd')!.textContent = raw;
+      block.appendChild(line);
+      if (res.text || res.html) {
+        const out = document.createElement('div');
+        out.className = 't-out' + (res.error ? ' t-err' : '') + (res.html ? ' t-ls' : '');
+        if (res.html) out.innerHTML = res.html; else out.textContent = res.text!;
+        block.appendChild(out);
+      }
+      log.appendChild(block);
+      while (log.children.length > 12) log.firstElementChild?.remove();
+      input.scrollIntoView({ block: 'nearest' });
+      if (res.go) setTimeout(() => navigate(res.go!), 350);
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp') { e.preventDefault(); if (hi > 0) input.value = history[--hi]; }
+      else if (e.key === 'ArrowDown') { e.preventDefault(); hi = Math.min(history.length, hi + 1); input.value = history[hi] ?? ''; }
+      else if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); form.requestSubmit(); input.value = 'clear'; form.requestSubmit(); }
+      else if (e.key === 'Tab') {
+        const v = input.value.trim().toLowerCase();
+        const words = ['help', 'ls', 'cd projects', 'cd posts', 'cd about', 'cd contact', 'cat role.txt', 'whoami', 'theme', 'clear', 'date'];
+        const m = words.find((w) => v && w.startsWith(v));
+        if (m) { e.preventDefault(); input.value = m; }
+      }
+    });
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('[data-term]').forEach((term) => {
+      if (term.dataset.bound) return;
+      term.dataset.bound = '1';
+      bind(term);
+      void typeIntro(term);
+    });
+  });
+</script>

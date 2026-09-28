@@ -1,0 +1,78 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site';
+import avatar from '../assets/avatar.jpg';
+
+const description = 'Systems engineer with a cybersecurity background. Infrastructure, automation and security-led IT operations.';
+
+const timeline = [
+  { when: 'Now', title: 'ICT Systems Engineer', body: 'Building, supporting and optimising IT infrastructure, with automation and security as the default rather than the add-on.' },
+  { when: '2024', title: 'Graduated in Cybersecurity, Macquarie University', body: 'Coursework included the Sony information security review, the GlobalHealth Solutions incident report and the Fortinet privacy impact assessment published under projects.' },
+  { when: 'Jun 2024', title: 'Penetration testing internship, WebSchool.au', body: 'Facilitated by SETUP International and Macquarie University. Live-environment testing with Kali Linux, reported back to the client.' },
+  { when: 'Sep to Oct 2023', title: 'Capture the Flag engagements', body: 'Two team penetration tests written up as full reports, from reconnaissance through exploitation to remediation advice.' },
+];
+
+const skills = [
+  { group: 'Infrastructure', items: ['Systems engineering', 'Automation and scripting', 'Infrastructure support', 'IT operations'] },
+  { group: 'Offensive security', items: ['Penetration testing', 'Nmap', 'Gobuster and Dirb', 'Burp Suite', 'sqlmap', 'Kali Linux'] },
+  { group: 'Governance and risk', items: ['NIST CSF', 'Essential Eight', 'ISO 27001', 'GDPR and the APPs', 'Privacy impact assessment', 'Incident analysis'] },
+  { group: 'Data', items: ['Python', 'pandas', 'Jupyter', 'Linear regression'] },
+];
+---
+
+<Base title="About" description={description} og="about">
+  <header class="page-head reveal">
+    <p class="eyebrow">~/about</p>
+    <h1>About</h1>
+  </header>
+
+  <div class="about-grid">
+    <div class="reveal">
+      <div class="about-intro">
+        <Image class="avatar" src={avatar} alt={`Photo of ${SITE.name}`} width="192" height="192" densities={[1, 2]} />
+        <div>
+          <p>I'm a systems engineer with a cybersecurity background. Day to day I look after IT infrastructure: building it, supporting it, and automating the parts that shouldn't need a human. Security isn't a separate job to me. It's the lens I use for everything from a server build to a script.</p>
+          <p>I studied cybersecurity at Macquarie University. The reports on this site came out of that time: penetration tests against live targets, an incident analysis of a healthcare ransomware attack, an information security review for Sony, and a privacy impact assessment of the Fortinet breach. They're here because they show how I think, not just what I know.</p>
+          <div class="btn-row">
+            <a class="btn btn--primary" href="/projects/">See the work</a>
+            <a class="btn" href="/contact/">Get in touch</a>
+            {SITE.cv && <a class="btn" href={SITE.cv} download>Download CV</a>}
+          </div>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="section-head"><h2>Timeline</h2></div>
+        <ol class="timeline stagger">
+          {timeline.map((t) => (
+            <li>
+              <span class="when">{t.when}</span>
+              <h3>{t.title}</h3>
+              <p>{t.body}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+
+    <aside class="reveal">
+      <div class="now">
+        <p class="eyebrow">Now</p>
+        <p>Working as an ICT Systems Engineer, automating the repetitive parts of IT operations, and writing up security work here as I go.</p>
+      </div>
+
+      <section class="section">
+        <div class="section-head"><h2>Skills</h2></div>
+        <div class="skills stagger">
+          {skills.map((s) => (
+            <div>
+              <h3>{s.group}</h3>
+              <ul>{s.items.map((i) => <li class="chip">{i}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    </aside>
+  </div>
+</Base>

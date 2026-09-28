@@ -1,0 +1,5 @@
+/about-us /about/ 301
+/about-us/ /about/ 301
+/index.xml /rss.xml 301
+/posts/index.xml /rss.xml 301
+/projects/index.xml /rss.xml 301

@@ -1,0 +1,29 @@
+---
+import { fmtDateShort, isoDate } from '../site';
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  date: Date;
+  type?: string;
+  tags?: string[];
+  minutes?: number;
+}
+const { href, title, description, date, type, tags = [], minutes } = Astro.props;
+const filterKeys = [type?.toLowerCase(), ...tags].filter(Boolean).join(' ');
+---
+
+<article class="card" data-tags={filterKeys}>
+  {(type || tags.length > 0) && (
+    <div class="chips">
+      {type && <span class="chip chip--type">{type}</span>}
+      {tags.slice(0, 3).map((t) => <span class="chip">#{t}</span>)}
+    </div>
+  )}
+  <h3 class="card-title"><a href={href}>{title}</a></h3>
+  <p>{description}</p>
+  <div class="meta">
+    <time datetime={isoDate(date)}>{fmtDateShort(date)}</time>
+    {minutes && <><span class="sep"></span><span>{minutes} min read</span></>}
+  </div>
+</article>

@@ -1,0 +1,5 @@
+Contact: mailto:contact@nathanielroberts.tech
+Expires: 2027-09-28T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://nathanielroberts.tech/.well-known/security.txt
+Policy: https://nathanielroberts.tech/contact/

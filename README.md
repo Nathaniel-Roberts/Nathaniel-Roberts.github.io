@@ -1,14 +1,41 @@
-# Nathaniel Roberts' Website
+# nathanielroberts.tech
 
-Welcome to my personal website! This site is a showcase of my journey, skills, and experiences in the field of Cybersecurity. It provides an overview of my background, current work, and aspirations, along with a way to get in touch with me.
+Personal site of Nathaniel Roberts. Built with [Astro](https://astro.build), hosted on Cloudflare Workers (static assets), source on GitHub.
 
-## About Me
+## Develop
 
-I am a third-year Cybersecurity student at Macquarie University, dedicated to fortifying digital landscapes and ensuring robust information security. Currently, I work as an ICT Junior Systems Engineer, where I create, support, and optimise critical IT infrastructure.
+```sh
+npm install
+npm run dev       # http://localhost:4321
+npm run build     # static output in dist/, search index built by Pagefind
+npm run preview   # serve dist/ locally
+```
 
-## Features
+Search only works against a built index, so run `npm run build` once before `npm run dev` if you want the command palette to return results in development.
 
-- **About Me**: Learn more about my background, skills, and professional journey.
-- **Projects**: A showcase of some of the projects I have worked on, demonstrating my expertise and experience in Cybersecurity.
-- **Blog**: Articles and insights on various topics related to Cybersecurity, Smart Home Tech, and my journey.
-- **Contact**: Information on how to get in touch with me for questions, collaborations, or professional inquiries.
+## Content
+
+- `src/content/posts/*.md` for blog posts
+- `src/content/projects/*.md` for project write-ups (images live in `src/content/projects/images/`)
+
+Frontmatter:
+
+```yaml
+---
+title: "Title"
+description: "One or two sentences. Used on cards, in search and on the social preview image."
+date: 2025-01-31
+tags: ["tag-one", "tag-two"]
+type: Report        # projects only: Report, CTF, Data, Tool or Other
+featured: true      # projects only: shows on the home page (top three by date)
+draft: false
+---
+```
+
+Headings start at `##`. The table of contents, reading time, anchors and social preview image are all generated.
+
+## Deploy
+
+Cloudflare Workers builds from this repository on every push. Preview deployments are created for other branches. Config lives in `wrangler.jsonc`; response headers (CSP and friends) in `public/_headers`; redirects in `public/_redirects`.
+
+The old `nathaniel-roberts.github.io` address is kept as a redirect by `.github/workflows/pages-redirect.yml`, which publishes the `redirect/` folder to GitHub Pages.

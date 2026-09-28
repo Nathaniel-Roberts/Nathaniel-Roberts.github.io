@@ -1,0 +1,25 @@
+---
+import { SITE } from '../site';
+import { BUILD } from '../lib/build';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div>
+      © {SITE.since}{year > SITE.since ? ` to ${year}` : ''} {SITE.name}{' '}
+      {BUILD.short && (
+        <>
+          · built from <a href={`${SITE.repo}/commit/${BUILD.sha}`} rel="noopener" target="_blank"><code>{BUILD.short}</code></a>
+        </>
+      )}
+    </div>
+    <div class="links">
+      <a href={SITE.github} rel="noopener me" target="_blank">GitHub</a>
+      <a href={SITE.linkedin} rel="noopener me" target="_blank">LinkedIn</a>
+      <a href="/rss.xml">RSS</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+      <a href={SITE.repo} rel="noopener" target="_blank">Source</a>
+    </div>
+  </div>
+</footer>
