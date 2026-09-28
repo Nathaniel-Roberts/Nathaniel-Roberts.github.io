@@ -7,6 +7,7 @@ import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Search from '../components/Search.astro';
+import Shortcuts from '../components/Shortcuts.astro';
 import { SITE, ROLE } from '../site';
 
 interface Props {
@@ -16,8 +17,9 @@ interface Props {
   type?: 'website' | 'article';
   published?: Date;
   noindex?: boolean;
+  jsonld?: Record<string, unknown> | Record<string, unknown>[];
 }
-const { title, description = SITE.description, og = 'index', type = 'website', published, noindex = false } = Astro.props;
+const { title, description = SITE.description, og = 'index', type = 'website', published, noindex = false, jsonld } = Astro.props;
 const fullTitle = title ? `${title} · ${SITE.name}` : `${SITE.name} · ${ROLE.headline}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const ogImage = new URL(`/og/${og}.png`, Astro.site);
@@ -56,6 +58,7 @@ const ogImage = new URL(`/og/${og}.png`, Astro.site);
     <meta name="twitter:title" content={title ?? SITE.name} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
     <script is:inline src="/theme-init.js"></script>
     <ClientRouter />
   </head>
@@ -67,5 +70,7 @@ const ogImage = new URL(`/og/${og}.png`, Astro.site);
     </main>
     <Footer />
     <Search />
+    <Shortcuts />
+    {SITE.analyticsToken && <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: SITE.analyticsToken })}></script>}
   </body>
 </html>

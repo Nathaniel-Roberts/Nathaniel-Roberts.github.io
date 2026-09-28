@@ -1,0 +1,52 @@
+---
+import { SITE } from '../site';
+const keys = [
+  ['/', 'or', 'Ctrl K', 'Search and commands'],
+  ['g', 'then', 'h', 'Home'],
+  ['g', 'then', 'b', 'Blog'],
+  ['g', 'then', 'p', 'Projects'],
+  ['g', 'then', 'u', 'Uses'],
+  ['g', 'then', 'a', 'About'],
+  ['g', 'then', 'c', 'Contact'],
+  ['t', '', '', 'Theme menu'],
+  ['?', '', '', 'This list'],
+  ['Esc', '', '', 'Close'],
+];
+---
+
+<dialog class="kbd-help" data-kbd-help aria-label="Keyboard shortcuts">
+  <div class="kbd-box">
+    <p class="kbd-title">Keyboard shortcuts on {SITE.domain}</p>
+    <dl>
+      {keys.map(([a, join, b, what]) => (
+        <>
+          <dt><kbd>{a}</kbd>{join && <span class="kbd-join"> {join} </span>}{b && <kbd>{b}</kbd>}</dt>
+          <dd>{what}</dd>
+        </>
+      ))}
+    </dl>
+  </div>
+</dialog>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+  const GO: Record<string, string> = { h: '/', b: '/posts/', p: '/projects/', u: '/uses/', a: '/about/', c: '/contact/' };
+  let pendingG = 0;
+  const help = () => document.querySelector<HTMLDialogElement>('[data-kbd-help]');
+
+  document.addEventListener('keydown', (e) => {
+    const t = e.target as HTMLElement;
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable) return;
+    if (document.querySelector('dialog[open]:not([data-kbd-help])')) return;
+    const h = help();
+    if (e.key === 'Escape' && h?.open) { h.close(); return; }
+    if (e.key === '?') { e.preventDefault(); h?.open ? h.close() : h?.showModal(); return; }
+    if (h?.open) return;
+    if (e.key === 't') { e.preventDefault(); (document.querySelector('[data-theme-toggle]') as HTMLElement | null)?.click(); return; }
+    if (e.key === 'g') { pendingG = Date.now(); return; }
+    if (pendingG && Date.now() - pendingG < 1200 && GO[e.key]) { e.preventDefault(); pendingG = 0; navigate(GO[e.key]); return; }
+    pendingG = 0;
+  });
+  document.addEventListener('click', (e) => { const h = help(); if (h?.open && e.target === h) h.close(); });
+</script>

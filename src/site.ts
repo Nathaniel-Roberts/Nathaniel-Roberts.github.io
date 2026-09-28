@@ -8,7 +8,7 @@ const currentRole = {
   title: 'ICT Systems Engineer',
   org: null as string | null,
   headline: 'Systems Engineer',
-  tagline: 'Systems Engineer | Automation | Security-Driven IT Solutions',
+  tagline: 'Cybersecurity | Incident Response | Automation | Applied AI',
   description:
     'Systems engineer with a cybersecurity background, writing about security, automation and IT infrastructure. Penetration test reports, incident analyses and privacy assessments.',
   intro:
@@ -21,7 +21,7 @@ const nextRole = {
   title: 'Cybersecurity Incident Response Analyst',
   org: 'PepsiCo' as string | null,
   headline: 'Cybersecurity Incident Response Analyst',
-  tagline: 'Cybersecurity Incident Response Analyst | Detection, Response, Automation',
+  tagline: 'Cybersecurity | Incident Response | Automation | Applied AI',
   description:
     'Cybersecurity incident response analyst with a systems engineering background, writing about detection, response, automation and IT infrastructure. Penetration test reports, incident analyses and privacy assessments.',
   intro:
@@ -39,15 +39,21 @@ export const SITE = {
   url: 'https://nathanielroberts.tech',
   domain: 'nathanielroberts.tech',
   email: 'contact@nathanielroberts.tech',
-  github: 'https://github.com/Nathaniel-Roberts',
   linkedin: 'https://linkedin.com/in/nathaniel-g-roberts/',
   repo: 'https://github.com/Nathaniel-Roberts/Nathaniel-Roberts.github.io',
   since: 2024,
   // Drop a PDF in public/ and set this to e.g. '/cv.pdf' to show the CV button.
   cv: null as string | null,
+  // Cloudflare Web Analytics site token (Analytics and Logs, Web Analytics, Add a site). null disables the beacon.
+  analyticsToken: null as string | null,
+  // Cloudflare Turnstile site key for the contact form. The secret is a Worker secret (TURNSTILE_SECRET).
+  turnstileSiteKey: '0x4AAAAAAFGY9Q9kAnqeOxTC',
+  github: 'https://github.com/Nathaniel-Roberts',
+  githubUser: 'Nathaniel-Roberts',
   nav: [
     { label: 'Blog', href: '/posts/' },
     { label: 'Projects', href: '/projects/' },
+    { label: 'Uses', href: '/uses/' },
     { label: 'About', href: '/about/' },
     { label: 'Contact', href: '/contact/' },
   ],

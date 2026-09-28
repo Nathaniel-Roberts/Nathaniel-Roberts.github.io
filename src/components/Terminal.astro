@@ -13,11 +13,12 @@ interface Props {
   interactive?: boolean;
   title?: string;
   hint?: string;
+  info?: Record<string, string>;
 }
-const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~', hint = 'Type "help" and press Enter.' } = Astro.props;
+const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~', hint = 'Type "help" and press Enter.', info = {} } = Astro.props;
 ---
 
-<div class="term" data-term data-tagline={SITE.tagline} data-whoami={ROLE.whoami}>
+<div class="term" data-term data-tagline={SITE.tagline} data-whoami={ROLE.whoami} data-info={JSON.stringify(info)}>
   <div class="term-bar" aria-hidden="true">{title}</div>
   <div class="term-body" data-term-body>
     {lines.map((l) => (
@@ -52,7 +53,7 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
     '': '/', '~': '/', '..': '/', home: '/', '/': '/',
     blog: '/posts/', posts: '/posts/', writing: '/posts/',
     projects: '/projects/', work: '/projects/',
-    about: '/about/', me: '/about/',
+    about: '/about/', me: '/about/', uses: '/uses/', setup: '/uses/', homelab: '/uses/',
     contact: '/contact/', rss: '/rss.xml',
   };
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
@@ -64,14 +65,41 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
     const key = arg.replace(/^~?\/?/, '').replace(/\/$/, '').toLowerCase();
     switch (cmd.toLowerCase()) {
       case '': return {};
-      case 'help': return { text: 'Commands:\n  ls              list sections\n  cd <section>    open blog, projects, about or contact\n  cat role.txt    what I do\n  whoami          who runs this site\n  theme [name]    list or switch colour themes\n  date            current time in Sydney\n  clear           clear the screen\n  help            this message' };
-      case 'ls': case 'dir': return { html: ['posts', 'projects', 'about', 'contact'].map((s) => `<a href="/${s}/">${s}/</a>`).join('  ') + '  <a href="/rss.xml">rss.xml</a>' };
+      case 'help': return { text: 'Commands:\n  ls              list sections\n  cd <section>    open blog, projects, about or contact\n  cat role.txt    what I do\n  whoami          who runs this site\n  theme [name]    list or switch colour themes\n  neofetch        about this site\n  date            current time in Sydney\n  clear           clear the screen\n  help            this message' };
+      case 'ls': case 'dir': return { html: ['posts', 'projects', 'uses', 'about', 'contact'].map((s) => `<a href="/${s}/">${s}/</a>`).join('  ') + '  <a href="/rss.xml">rss.xml</a>' };
       case 'cd': case 'open': case 'goto':
         if (key in ROUTES) return { text: `Opening ${ROUTES[key]}`, go: ROUTES[key] };
         return { text: `cd: no such file or directory: ${arg || '~'}`, error: true };
-      case 'blog': case 'posts': case 'projects': case 'about': case 'contact': return { text: `Opening ${ROUTES[cmd.toLowerCase()]}`, go: ROUTES[cmd.toLowerCase()] };
+      case 'blog': case 'posts': case 'projects': case 'uses': case 'about': case 'contact': return { text: `Opening ${ROUTES[cmd.toLowerCase()]}`, go: ROUTES[cmd.toLowerCase()] };
       case 'whoami': return { text: term.dataset.whoami || 'Nathaniel Roberts.' };
       case 'hostname': return { text: 'nathanielroberts.tech' };
+      case 'neofetch': case 'fastfetch': {
+        let info: Record<string, string> = {};
+        try { info = JSON.parse(term.dataset.info || '{}'); } catch {}
+        const days = Math.floor((Date.now() - new Date('2024-05-16').getTime()) / 86400000);
+        const rows: [string, string][] = [
+          ['Host', 'nathanielroberts.tech'],
+          ['OS', 'Astro ' + (info.astro || '7') + ' on Cloudflare Workers'],
+          ['Kernel', info.build ? 'commit ' + info.build : 'dev'],
+          ['Uptime', `${days} days`],
+          ['Packages', `${info.posts || '?'} posts, ${info.projects || '?'} projects`],
+          ['Shell', 'this terminal'],
+          ['Resolution', `${innerWidth}x${innerHeight}`],
+          ['Theme', document.documentElement.dataset.theme || 'system'],
+          ['Font', 'IBM Plex Sans, IBM Plex Mono'],
+          ['CPU', 'one human, caffeinated'],
+        ];
+        const art = ['  ┌──────────┐', '  │  >_      │', '  │          │', '  │  nr.tech │', '  └──────────┘'];
+        const width = Math.max(...art.map((a) => a.length)) + 3;
+        const lines = Math.max(art.length, rows.length);
+        const out: string[] = [];
+        for (let i = 0; i < lines; i++) {
+          const left = (art[i] || '').padEnd(width);
+          const r = rows[i];
+          out.push(left + (r ? `${r[0]}: ${r[1]}` : ''));
+        }
+        return { text: out.join('\n') };
+      }
       case 'pwd': return { text: location.pathname };
       case 'date': return { text: new Date().toLocaleString('en-AU', { timeZone: 'Australia/Sydney', dateStyle: 'full', timeStyle: 'short' }) + ' (Sydney)' };
       case 'cat':
@@ -187,7 +215,7 @@ const { lines, interactive = true, title = 'nathaniel@nathanielroberts.tech: ~',
       else if (e.key === 'l' && e.ctrlKey) { e.preventDefault(); form.requestSubmit(); input.value = 'clear'; form.requestSubmit(); }
       else if (e.key === 'Tab') {
         const v = input.value.trim().toLowerCase();
-        const words = ['help', 'ls', 'cd projects', 'cd posts', 'cd about', 'cd contact', 'cat role.txt', 'whoami', 'theme', 'theme mocha', 'theme system', 'clear', 'date'];
+        const words = ['help', 'ls', 'cd projects', 'cd posts', 'cd uses', 'cd about', 'cd contact', 'cat role.txt', 'whoami', 'neofetch', 'theme', 'theme mocha', 'theme system', 'clear', 'date'];
         const m = words.find((w) => v && w.startsWith(v));
         if (m) { e.preventDefault(); input.value = m; }
       }

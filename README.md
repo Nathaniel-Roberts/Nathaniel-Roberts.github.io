@@ -34,6 +34,22 @@ draft: false
 
 Headings start at `##`. The table of contents, reading time, anchors and social preview image are all generated.
 
+## Contact form
+
+`/api/contact` is handled by `worker/index.js` (Cloudflare Worker in front of the static assets). It verifies a Turnstile token, then sends the message through Cloudflare Email Routing to the destination in `wrangler.jsonc`. The Turnstile site key lives in `src/site.ts`; the secret is a Worker secret:
+
+```sh
+npx wrangler secret put TURNSTILE_SECRET
+```
+
+## GitHub activity
+
+The contribution graph on the home page is fetched at build time from GitHub's public contributions page (no token). It refreshes whenever the site is rebuilt. If GitHub is unreachable the section is skipped and the build still passes.
+
+## Analytics
+
+Set `analyticsToken` in `src/site.ts` to a Cloudflare Web Analytics site token to enable the beacon. The CSP in `public/_headers` already allows it.
+
 ## Deploy
 
 Cloudflare Workers builds from this repository on every push. Preview deployments are created for other branches. Config lives in `wrangler.jsonc`; response headers (CSP and friends) in `public/_headers`; redirects in `public/_redirects`.

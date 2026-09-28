@@ -1,0 +1,80 @@
+---
+import Base from '../layouts/Base.astro';
+
+const description = 'The hardware, software and homelab behind the work. What runs where, and what it is for.';
+
+const estate = [
+  { name: 'Firewall', hw: 'Dell OptiPlex 7090 Micro', what: 'OPNsense as a router-on-a-stick for the VLANs, Kea DHCP, AdGuard Home for DNS, Tailscale subnet router. Config is Terraform-managed with the XML backed up to git hourly.' },
+  { name: 'Home Assistant', hw: 'Dell OptiPlex 7090 Micro, 1 TB NVMe', what: 'Home Assistant OS on bare metal. Frigate NVR, EMQX, Nginx Proxy Manager, Cloudflare Tunnel, the UniFi controller and around thirty add-ons.' },
+  { name: 'Proxmox', hw: 'Dell OptiPlex 7090, i7-11700T, 32 GB', what: 'LXC containers for the media stack, a Paper Minecraft server for friends, Homepage, Audiobookshelf and a NixOS container.' },
+  { name: 'Storage', hw: 'Synology NAS', what: 'NFS for media libraries, camera recordings, weekly Proxmox backups and nightly config archives.' },
+  { name: 'Network', hw: '2x Ubiquiti USW Enterprise 8 PoE', what: '10G SFP+ link between switches, PoE for the access point, VLAN-segmented (servers, IoT, security, guests) with the firewall owning every gateway.' },
+  { name: 'Wi-Fi', hw: 'Aerohive AP550', what: 'Per-user pre-shared keys map each device to its VLAN, so an IoT gadget lands on the IoT network without a separate SSID.' },
+];
+
+const stacks = [
+  { group: 'Media', items: 'Jellyfin with Intel QSV transcoding, Sonarr, Radarr, Prowlarr, Seerr, Bazarr, Recyclarr, Pinchflat, qBittorrent, Decluttarr' },
+  { group: 'Observability', items: 'Uptime Kuma, Grafana, InfluxDB, Telegraf on the firewall, Beszel, webhooks into Home Assistant for phone alerts' },
+  { group: 'Self-hosted apps', items: 'SparkyFitness (nutrition and training), TREK (travel planner) behind Cloudflare Tunnel and Access, Homepage dashboard, Audiobookshelf' },
+  { group: 'Infrastructure as code', items: 'Terraform for OPNsense, UniFi and Nginx Proxy Manager. Nix flakes for the workstation (NixOS) and the laptop (nix-darwin, nix-homebrew). sops-nix for secrets. Everything in git.' },
+  { group: 'Remote access', items: 'Tailscale everywhere. Cloudflare Tunnel and Access for the few things that need a public URL. No inbound port forwards.' },
+  { group: 'Documentation', items: 'Obsidian vault with a runbook per system, incident write-ups for every outage, and a decisions log. Published internally as a Quartz wiki.' },
+];
+
+const ai = [
+  { group: 'Local models', items: 'MacBook Pro M5 Max, 128 GB. MLX inference behind a LiteLLM proxy, currently running Qwen3-Coder-Next in 4-bit for agentic coding with opencode. Fully nix-managed, offline capable.' },
+  { group: 'Hosted models', items: 'Claude Code for building and maintaining this site and for automation work. The site itself was designed and built with it, then reviewed against Anthropic\'s own frontend-design guidance.' },
+  { group: 'Where it goes', items: 'Automating the repetitive parts of IT operations and, increasingly, detection and triage. Agents with a small, well-chosen tool surface beat agents with everything wired in.' },
+];
+
+const travel = [
+  { group: 'Travel router', items: 'TP-Link Deco M5 running OpenWrt, dual uplink, tunnelling back home over Tailscale so hotel Wi-Fi gets the same DNS filtering and access as the house.' },
+];
+---
+
+<Base title="Uses" description={description} og="uses">
+  <header class="page-head">
+    <p class="eyebrow">~/uses</p>
+    <h1>Uses</h1>
+    <p class="lede">{description}</p>
+  </header>
+
+  <section class="section">
+    <div class="section-head"><h2>Homelab</h2></div>
+    <p class="uses-intro">Six boxes, one rack shelf, a lot of runbooks. The lab is where I practise the things I get paid for: segmentation, backups that restore, monitoring that pages, and writing down what broke.</p>
+    <ol class="index uses-estate">
+      {estate.map((e) => (
+        <li class="row">
+          <span class="row-date">{e.name}</span>
+          <div>
+            <h3 class="row-title">{e.hw}</h3>
+            <p class="row-desc">{e.what}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>Software and services</h2></div>
+    <dl class="skills uses-list">
+      {stacks.map((s) => (<><dt>{s.group}</dt><dd>{s.items}</dd></>))}
+    </dl>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>AI</h2></div>
+    <dl class="skills uses-list">
+      {ai.map((s) => (<><dt>{s.group}</dt><dd>{s.items}</dd></>))}
+    </dl>
+  </section>
+
+  <section class="section">
+    <div class="section-head"><h2>On the road</h2></div>
+    <dl class="skills uses-list">
+      {travel.map((s) => (<><dt>{s.group}</dt><dd>{s.items}</dd></>))}
+    </dl>
+  </section>
+
+  <p class="uses-foot">Last reviewed September 2026. Addresses, hostnames and anything else that would help someone find their way in are left out on purpose.</p>
+</Base>

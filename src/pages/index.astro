@@ -4,7 +4,9 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Terminal from '../components/Terminal.astro';
 import Card from '../components/Card.astro';
-import { SITE } from '../site';
+import Contributions from '../components/Contributions.astro';
+import { BUILD } from '../lib/build';
+import { SITE, ROLE } from '../site';
 import avatar from '../assets/avatar.jpg';
 
 const byDate = (a: { data: { date: Date } }, b: { data: { date: Date } }) => b.data.date.valueOf() - a.data.date.valueOf();
@@ -15,6 +17,12 @@ const withTime = async <T extends { id: string }>(items: T[]) =>
   Promise.all(items.map(async (e) => ({ entry: e, minutes: (await render(e as any)).remarkPluginFrontmatter.minutesRead as number })));
 const featuredT = await withTime(featured);
 const postsT = await withTime(posts);
+const allPosts = await getCollection('posts', ({ data }) => !data.draft);
+const termInfo = { build: BUILD.short, posts: String(allPosts.length), projects: String(projects.length), astro: '7' };
+const jsonld = [
+  { '@context': 'https://schema.org', '@type': 'Person', name: SITE.name, url: SITE.url, jobTitle: ROLE.title, worksFor: ROLE.org ? { '@type': 'Organization', name: ROLE.org } : undefined, sameAs: [SITE.github, SITE.linkedin], email: SITE.email, image: new URL('/images/avatar.jpg', SITE.url).toString() },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: SITE.name, url: SITE.url, description: SITE.description, inLanguage: 'en-AU' },
+];
 
 const lines = [
   { cmd: 'whoami', slot: 'whoami' },
@@ -23,9 +31,9 @@ const lines = [
 ];
 ---
 
-<Base>
+<Base jsonld={jsonld}>
   <section class="hero" aria-label="Introduction">
-    <Terminal lines={lines}>
+    <Terminal lines={lines} info={termInfo}>
       <div slot="whoami" class="t-who">
         <Image class="avatar" src={avatar} alt="" width="112" height="112" densities={[1, 2]} loading="eager" />
         <h1>{SITE.name}</h1>
@@ -56,6 +64,8 @@ const lines = [
       ))}
     </ol>
   </section>
+
+  <Contributions />
 
   <section class="section">
     <div class="section-head"><h2>Elsewhere</h2></div>

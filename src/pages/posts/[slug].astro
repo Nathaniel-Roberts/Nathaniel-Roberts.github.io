@@ -8,6 +8,13 @@ export async function getStaticPaths() {
 }
 const { entry } = Astro.props;
 const { Content, headings, remarkPluginFrontmatter } = await render(entry);
+const others = (await getCollection('posts', ({ data, id }) => !data.draft && id !== entry.id));
+const related = others
+  .map((o) => ({ o, score: o.data.tags.filter((t) => entry.data.tags.includes(t)).length }))
+  .filter((x) => x.score > 0)
+  .sort((a, b) => b.score - a.score || b.o.data.date.valueOf() - a.o.data.date.valueOf())
+  .slice(0, 3)
+  .map(({ o }) => ({ href: `/posts/${o.id}/`, title: o.data.title, description: o.data.description, date: o.data.date, type: 'type' in o.data ? (o.data as any).type : undefined, tags: o.data.tags }));
 ---
 
 <Article
@@ -23,6 +30,7 @@ const { Content, headings, remarkPluginFrontmatter } = await render(entry);
   comments
   back={{ href: '/posts/', label: 'posts' }}
   sourcePath={`src/content/posts/${entry.id}.md`}
+  related={related}
 >
   <Content />
 </Article>

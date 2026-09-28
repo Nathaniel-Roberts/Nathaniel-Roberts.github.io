@@ -8,6 +8,7 @@ export async function getStaticPaths() {
     { slug: 'index', props: { title: SITE.name, description: SITE.tagline, eyebrow: 'whoami' } },
     { slug: 'about', props: { title: 'About', description: STARTED_NEXT ? 'Cybersecurity incident response analyst at PepsiCo with a systems engineering background.' : 'Systems engineer with a cybersecurity background, moving into incident response at PepsiCo.', eyebrow: 'cat about.md' } },
     { slug: 'contact', props: { title: 'Contact', description: 'Questions, project ideas or collaborations.', eyebrow: 'cat contact.md' } },
+    { slug: 'uses', props: { title: 'Uses', description: 'The hardware, software and homelab behind the work.', eyebrow: 'cat uses.md' } },
     { slug: 'posts', props: { title: 'Blog', description: 'Notes on security, automation and the work of keeping IT infrastructure running.', eyebrow: 'ls ~/posts' } },
     { slug: 'projects', props: { title: 'Projects', description: 'Penetration test reports, incident analyses, privacy assessments and data work.', eyebrow: 'ls ~/projects' } },
   ];

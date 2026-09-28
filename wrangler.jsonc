@@ -1,13 +1,18 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "nathanielroberts-tech",
+  "main": "worker/index.js",
   "compatibility_date": "2026-09-01",
   "workers_dev": true,
   "preview_urls": true,
   "routes": [{ "pattern": "nathanielroberts.tech", "custom_domain": true }],
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "not_found_handling": "404-page",
-    "html_handling": "auto-trailing-slash"
-  }
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/api/*"]
+  },
+  "send_email": [{ "name": "EMAIL", "destination_address": "nathanielgroberts@outlook.com" }],
+  "observability": { "enabled": true }
 }

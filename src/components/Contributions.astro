@@ -1,0 +1,46 @@
+---
+import { getContributions } from '../lib/github';
+import { SITE } from '../site';
+const data = await getContributions(SITE.githubUser);
+const cell = 11, gap = 3, step = cell + gap;
+let weeks: { date: string; level: number; count: number }[][] = [];
+if (data) {
+  // Pad the first week so columns start on Sunday like GitHub's own calendar.
+  const first = new Date(data.days[0].date + 'T00:00:00Z').getUTCDay();
+  let col: typeof data.days = [];
+  for (let i = 0; i < first; i++) col.push({ date: '', level: -1, count: 0 });
+  for (const d of data.days) { col.push(d); if (col.length === 7) { weeks.push(col); col = []; } }
+  if (col.length) weeks.push(col);
+}
+const width = weeks.length * step - gap;
+const height = 7 * step - gap;
+const months: { x: number; label: string }[] = [];
+let lastMonth = -1;
+weeks.forEach((w, i) => {
+  const d = w.find((x) => x.date);
+  if (!d) return;
+  const m = new Date(d.date + 'T00:00:00Z').getUTCMonth();
+  if (m !== lastMonth) { if (i > 0 || lastMonth === -1) months.push({ x: i * step, label: new Date(d.date + 'T00:00:00Z').toLocaleString('en-AU', { month: 'short', timeZone: 'UTC' }) }); lastMonth = m; }
+});
+const fmt = (s: string) => new Date(s + 'T00:00:00Z').toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+---
+
+{data && (
+  <section class="section" aria-label="GitHub activity">
+    <div class="section-head">
+      <h2>GitHub activity</h2>
+      <a href={SITE.github} target="_blank" rel="noopener me">github.com/{SITE.githubUser}</a>
+    </div>
+    <div class="contrib">
+      <p class="contrib-summary">{data.total.toLocaleString('en-AU')} contributions from {fmt(data.from)} to {fmt(data.to)}.</p>
+      <div class="contrib-scroll">
+        <svg class="contrib-graph" viewBox={`0 -16 ${width} ${height + 16}`} width={width} height={height + 16} role="img" aria-label={`GitHub contribution calendar, ${data.total} contributions in the last year`}>
+          {months.filter((m, i, arr) => i === 0 || m.x - arr[i - 1].x > 30).map((m) => <text x={m.x} y="-6" class="contrib-month">{m.label}</text>)}
+          {weeks.map((w, x) => w.map((d, y) => d.level >= 0 && (
+            <rect x={x * step} y={y * step} width={cell} height={cell} rx="2" class={`c${d.level}`}><title>{d.count === 0 ? 'No contributions' : `${d.count} contribution${d.count === 1 ? '' : 's'}`} on {fmt(d.date)}</title></rect>
+          )))}
+        </svg>
+      </div>
+    </div>
+  </section>
+)}

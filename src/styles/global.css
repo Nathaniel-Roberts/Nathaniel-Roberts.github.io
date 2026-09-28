@@ -408,3 +408,88 @@ kbd { font: 0.7rem var(--font-mono); border: 1px solid var(--line-2); border-rad
 .sw-tokyo-night { background: #1a1b26; border-color: #7aa2f7; }
 .sw-solarized-dark { background: #002b36; border-color: #b58900; }
 .sw-solarized-light { background: #fdf6e3; border-color: #cb4b16; }
+
+/* ---------- Resume reading ---------- */
+.resume { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; padding: 0.75rem 1rem; margin-bottom: 1.5rem; border: 1px solid var(--line-2); border-left: 2px solid var(--accent); font-size: 0.9rem; color: var(--fg-2); }
+.resume[hidden] { display: none; }
+.resume button { background: none; border: 0; padding: 0; font: inherit; color: var(--accent); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.linkish { background: none; border: 0; padding: 0; font: inherit; color: var(--fg-2); cursor: pointer; }
+.linkish:hover { color: var(--accent); }
+.related { max-width: 70ch; }
+
+/* ---------- Keyboard help ---------- */
+.kbd-help { border: 0; padding: 0; background: transparent; width: min(30rem, 92vw); margin: 12vh auto 0; }
+.kbd-help::backdrop { background: rgba(10, 12, 16, 0.5); }
+.kbd-help[open] { animation: fade 0.15s var(--ease) both; }
+.kbd-box { background: var(--bg-2); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 1rem 1.25rem 1.25rem; }
+.kbd-title { font: 0.8rem var(--font-mono); color: var(--muted); margin: 0 0 0.75rem; }
+.kbd-box dl { display: grid; grid-template-columns: auto 1fr; gap: 0.5rem 1.25rem; margin: 0; align-items: center; }
+.kbd-box dt { white-space: nowrap; }
+.kbd-box dd { margin: 0; font-size: 0.9rem; }
+.kbd-join { font-size: 0.75rem; color: var(--muted); }
+
+/* ---------- Palette sub-results ---------- */
+.palette-results .r-sub { display: flex; flex-direction: column; gap: 0.1rem; padding: 0.4rem 1rem 0.4rem 2rem; border-left: 2px solid transparent; text-decoration: none; color: var(--fg-2); font-size: 0.85rem; }
+.palette-results .r-sub[aria-selected='true'], .palette-results .r-sub:hover { background: var(--accent-soft); border-left-color: var(--accent); }
+.palette-results .r-sub-title { color: var(--fg); }
+.palette-results .r-sub-title::before { content: '# '; color: var(--muted); font-family: var(--font-mono); }
+
+/* ---------- Contribution graph ---------- */
+.contrib { padding-top: 1rem; }
+.contrib-summary { margin: 0 0 0.75rem; font: 0.82rem var(--font-mono); color: var(--muted); }
+.contrib-scroll { overflow-x: auto; padding-bottom: 0.25rem; }
+.contrib-graph { display: block; max-width: none; }
+.contrib-month { font: 10px var(--font-mono); fill: var(--muted); }
+.contrib-graph rect { fill: var(--line); }
+.contrib-graph .c1 { fill: color-mix(in srgb, var(--accent) 30%, var(--bg-2)); }
+.contrib-graph .c2 { fill: color-mix(in srgb, var(--accent) 55%, var(--bg-2)); }
+.contrib-graph .c3 { fill: color-mix(in srgb, var(--accent) 80%, var(--bg-2)); }
+.contrib-graph .c4 { fill: var(--accent); }
+
+/* ---------- Contact form ---------- */
+.contact-grid { display: grid; gap: 2.5rem; align-items: start; }
+@media (min-width: 900px) { .contact-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); } .contact-grid .contact-list { margin-top: 0; } }
+.cform { display: flex; flex-direction: column; gap: 1rem; max-width: 40rem; }
+.cform label { display: flex; flex-direction: column; gap: 0.35rem; }
+.cform label span { font: 0.8rem var(--font-mono); color: var(--muted); }
+.cform input, .cform textarea { font: 1rem var(--font-sans); color: var(--fg); background: var(--bg-2); border: 1px solid var(--line-2); border-radius: var(--radius); padding: 0.6rem 0.75rem; width: 100%; }
+.cform input:focus, .cform textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.cform textarea { resize: vertical; min-height: 9rem; }
+.cform .hp { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+.cform-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.cform-status { margin: 0; font-size: 0.9rem; color: var(--fg-2); }
+.cform-status:empty { display: none; }
+
+/* ---------- Uses ---------- */
+.uses-intro { max-width: 62ch; color: var(--fg-2); margin: 1rem 0 0.5rem; }
+.uses-estate .row { grid-template-columns: 7.5rem minmax(0, 1fr); }
+.uses-estate .row-title { font-size: 1rem; }
+.uses-estate .row-desc { max-width: 70ch; }
+@media (max-width: 640px) { .uses-estate .row { grid-template-columns: 1fr; } }
+.uses-list { margin-top: 0.25rem; }
+.uses-list dd { color: var(--fg-2); max-width: 70ch; }
+.uses-foot { margin-top: 3rem; font: 0.8rem var(--font-mono); color: var(--muted); max-width: 62ch; }
+
+/* ---------- Print ---------- */
+@media print {
+  @page { margin: 18mm 16mm; }
+  html { scroll-padding-top: 0; }
+  body { background: #fff; color: #000; font-size: 11pt; line-height: 1.5; display: block; }
+  .site-header, .site-footer, .progress, .toc-side, .toc-mobile, .palette, .kbd-help, .theme-menu, .resume, .article-foot, .comments, .related, .back, .copy-btn, .lightbox, .skip { display: none !important; }
+  .wrap { max-width: none; padding: 0; }
+  .article { display: block; margin-top: 0; }
+  .article-head { border-bottom: 1px solid #000; padding-bottom: 8pt; margin-bottom: 14pt; }
+  .article-head h1 { font-size: 22pt; max-width: none; }
+  .article-head .lede { color: #333; font-size: 12pt; }
+  .art-meta, .art-tags, .art-tags a { color: #555; }
+  .prose { max-width: none; }
+  .prose a { color: #000; text-decoration: none; }
+  .prose a[href^='http']::after { content: ' (' attr(href) ')'; font-size: 9pt; color: #555; word-break: break-all; }
+  .prose .anchor { display: none; }
+  .prose h2, .prose h3, .prose h4 { break-after: avoid; }
+  .prose figure, .prose pre, .prose table, .prose blockquote { break-inside: avoid; }
+  .prose figure img { border: 1px solid #999; }
+  .prose pre { border: 1px solid #999; background: #f4f4f4 !important; white-space: pre-wrap; }
+  .astro-code, .astro-code span { color: #000 !important; }
+  .prose table { display: table; width: 100%; }
+}

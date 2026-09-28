@@ -16,7 +16,7 @@ const filterKeys = [type?.toLowerCase(), ...tags].filter(Boolean).join(' ');
 <li class="row" data-tags={filterKeys}>
   <time class="row-date" datetime={isoDate(date)}>{fmtDateShort(date)}</time>
   <div>
-    <h3 class="row-title"><a href={href}>{title}</a></h3>
+    <h3 class="row-title" transition:name={`title-${href}`}><a href={href}>{title}</a></h3>
     <p class="row-desc">{description}</p>
     {(type || tags.length > 0) && (
       <p class="row-meta">
